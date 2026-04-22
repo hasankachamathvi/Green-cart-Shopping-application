@@ -99,6 +99,7 @@ CREATE TABLE order_items (
 	ON DELETE CASCADE
 );
 
+
 -- =========================
 -- INDEXES (Performance)
 -- =========================
