@@ -9,7 +9,10 @@ $categories = [];
 while ($row = $cats_result->fetch_assoc()) $categories[] = $row;
 
 // Fetch products
-$prods_result = $conn->query("SELECT p.*, c.cateagory_name FROM products p LEFT JOIN categories c ON p.category_id = c.category_id");
+$prods_result = $conn->query("SELECT p.*, c.category_name FROM products p LEFT JOIN categories c ON p.category_id = c.category_id");
+if (!$prods_result) {
+  die("Products query failed: " . $conn->error);
+}
 $products = [];
 while ($row = $prods_result->fetch_assoc()) $products[] = $row;
 
