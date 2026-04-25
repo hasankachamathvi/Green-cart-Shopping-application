@@ -11,7 +11,7 @@ session_start();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="homepage">
 <nav class="nav">
 	<a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
 	<div class="nav-right">
@@ -28,24 +28,25 @@ session_start();
 	</div>
 </nav>
 
-<section class="home-hero">
-	<div class="hero-banner-overlay"></div>
-	<img class="hero-banner-img" src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=1600&q=80" alt="Fresh vegetables banner">
-	<div class="home-hero-content">
-		<p class="hero-kicker">Farm to Door in Hours</p>
-		<h1>Welcome to the world of GreenTrack</h1>
-		<p>At GreenTrack, we bring fresh, sustainable, and organic produce to your doorstep with transparent sourcing and trusted quality.</p>
-		<div class="hero-actions">
-			<a href="products.php" class="hero-cta">View Products</a>
-			<a href="contact.php" class="hero-ghost">Talk to Us</a>
-		</div>
-	</div>
-</section>
+<main class="home-main">
+  <section class="home-hero">
+    <div class="hero-banner-overlay"></div>
+    <img class="hero-banner-img" src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=1600&q=80" alt="Fresh vegetables banner">
+    <div class="home-hero-content">
+      <p class="hero-kicker">Farm to Door in Hours</p>
+      <h1>Welcome to the world of GreenTrack</h1>
+      <p>At GreenTrack, we bring fresh, sustainable, and organic produce to your doorstep with transparent sourcing and trusted quality.</p>
+      <div class="hero-actions">
+        <a href="products.php" class="hero-cta">View Products</a>
+        <a href="contact.php" class="hero-ghost">Talk to Us</a>
+      </div>
+    </div>
+  </section>
 
-<section class="home-services">
-	<h2>Our Services</h2>
-	<p class="home-subtitle">Your gateway to fresh, sustainable living</p>
-	<div class="service-grid">
+  <section class="home-services">
+    <h2>Our Services</h2>
+    <p class="home-subtitle">Your gateway to fresh, sustainable living</p>
+    <div class="service-grid">
 		<article class="service-card">
 			<img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=80" alt="Organic products">
 			<div class="service-card-body">
@@ -67,24 +68,25 @@ session_start();
 				<p>Carefully sourced produce with strict quality checks and easy replacement support.</p>
 			</div>
 		</article>
-	</div>
-</section>
+    </div>
+  </section>
 
-<section class="home-split">
-	<div class="split-image-wrap">
-		<img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80" alt="Basket of produce">
-	</div>
-	<div class="split-content">
-		<h2>Freshness backed by data and trust</h2>
-		<p>From supplier to shelf, each product is tagged, reviewed, and delivered with full visibility. Build your cart, checkout securely, and track every order.</p>
-		<ul class="feature-list">
-			<li>Daily restocked products and category-wise browsing</li>
-			<li>Secure login, registration, and smooth cart checkout</li>
-			<li>Dedicated admin panel for product and payment management</li>
-		</ul>
-		<a href="products.php" class="hero-cta">Start Shopping</a>
-	</div>
-</section>
+  <section class="home-split">
+	  <div class="split-image-wrap">
+		  <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80" alt="Basket of produce">
+	  </div>
+	  <div class="split-content">
+		  <h2>Freshness backed by data and trust</h2>
+		  <p>From supplier to shelf, each product is tagged, reviewed, and delivered with full visibility. Build your cart, checkout securely, and track every order.</p>
+		  <ul class="feature-list">
+			  <li>Daily restocked products and category-wise browsing</li>
+			  <li>Secure login, registration, and smooth cart checkout</li>
+			  <li>Dedicated admin panel for product and payment management</li>
+		  </ul>
+		  <a href="products.php" class="hero-cta">Start Shopping</a>
+	  </div>
+  </section>
+</main>
 
 <footer class="site-footer">
 	<div>© <?= date('Y') ?> GreenTrack. All rights reserved.</div>
