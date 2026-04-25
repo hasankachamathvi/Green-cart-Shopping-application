@@ -3,6 +3,12 @@ session_start();
 include("../config/db.php");
 $user_id = $_SESSION['user_id'] ?? 1;
 
+function productImagePath($image_url) {
+  if (!$image_url) return '';
+  if (preg_match('/^https?:\/\//i', $image_url)) return $image_url;
+  return "../assets/images/" . $image_url;
+}
+
 // Fetch categories
 $cats_result = $conn->query("SELECT * FROM categories");
 $categories = [];
@@ -40,8 +46,11 @@ while ($row = $cart_result->fetch_assoc()) {
 
 <!-- NAVBAR -->
 <nav class="nav">
-  <div class="nav-logo"><span>🌿</span> FreshMart</div>
+  <a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
   <div class="nav-right">
+    <a href="index.php" class="back-btn">Home</a>
+    <a href="products.php" class="back-btn">Product</a>
+    <a href="contact.php" class="back-btn">Contact Us</a>
     <input class="nav-search" type="text" placeholder="Search products..." id="searchInput" oninput="filterProducts()">
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Cart <span class="cart-count" id="cartCount">0</span>
@@ -84,10 +93,20 @@ while ($row = $cart_result->fetch_assoc()) {
     <?php foreach ($products as $p):
       $qty = $cart_items[$p['product_id']] ?? 0;
       $emoji = getEmoji($p['name']);
+      $imgPath = productImagePath($p['image_url']);
     ?>
     <div class="product-card" data-category="<?= $p['category_id'] ?>" data-name="<?= strtolower($p['name']) ?>">
       <div class="in-cart-badge<?= $qty > 0 ? ' show' : '' ?>" id="badge-<?= $p['product_id'] ?>"><?= $qty ?> in cart</div>
-      <div class="product-img"><?= $emoji ?></div>
+      <a href="product-details.php?id=<?= $p['product_id'] ?>" style="text-decoration:none">
+        <div class="product-img">
+          <?php if ($imgPath): ?>
+            <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="product-img-tag" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+            <span class="product-fallback-emoji" style="display:none"><?= $emoji ?></span>
+          <?php else: ?>
+            <span class="product-fallback-emoji" style="display:flex"><?= $emoji ?></span>
+          <?php endif; ?>
+        </div>
+      </a>
       <div class="product-info">
         <div class="product-name"><?= htmlspecialchars($p['name']) ?></div>
         <div class="product-desc"><?= htmlspecialchars($p['description']) ?></div>
@@ -95,6 +114,7 @@ while ($row = $cart_result->fetch_assoc()) {
           <div class="product-price">Rs.<?= number_format($p['price'], 2) ?><span>/unit</span></div>
           <button class="add-btn" onclick="addToCart(<?= $p['product_id'] ?>, '<?= addslashes($p['name']) ?>', <?= $p['price'] ?>, '<?= $emoji ?>')">+</button>
         </div>
+        <a href="product-details.php?id=<?= $p['product_id'] ?>" class="details-link">View details</a>
       </div>
     </div>
     <?php endforeach; ?>

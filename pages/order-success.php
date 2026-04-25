@@ -1,8 +1,20 @@
 <?php
 session_start();
 $order_id = $_SESSION['order_success'] ?? null;
+$payment_method = $_SESSION['payment_method'] ?? 'cash_on_delivery';
+$payment_status = $_SESSION['payment_status'] ?? 'pending';
 if (!$order_id) { header("Location: products.php"); exit; }
 unset($_SESSION['order_success']);
+unset($_SESSION['payment_method']);
+unset($_SESSION['payment_status']);
+
+function paymentLabel($method) {
+  return match ($method) {
+    'card' => 'Card',
+    'bank_transfer' => 'Bank Transfer',
+    default => 'Cash on Delivery',
+  };
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +35,8 @@ unset($_SESSION['order_success']);
     <div class="success-icon">✅</div>
     <h1>Order Placed!</h1>
     <p>Your order <strong>#<?= $order_id ?></strong> has been placed successfully.</p>
-    <p style="font-size:13px;color:var(--muted);margin-top:8px">We'll deliver your fresh groceries shortly!</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px">Payment: <strong><?= paymentLabel($payment_method) ?></strong> | Status: <strong><?= ucfirst($payment_status) ?></strong></p>
+    <p style="font-size:13px;color:var(--muted);margin-top:6px">We'll deliver your fresh groceries shortly!</p>
     <a href="products.php" class="hero-cta" style="display:inline-block;margin-top:24px;text-decoration:none">Continue Shopping →</a>
   </div>
 </div>

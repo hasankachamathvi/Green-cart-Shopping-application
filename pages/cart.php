@@ -118,9 +118,7 @@ function getEmoji($name) {
       <?php if ($total < 1500): ?>
       <div class="delivery-hint">Add Rs. <?= number_format(1500 - $total, 2) ?> more for free delivery!</div>
       <?php endif; ?>
-      <form action="../api/checkout.php" method="POST">
-        <button type="submit" class="checkout-btn" style="width:100%;margin-top:16px">Place Order →</button>
-      </form>
+      <a href="checkout.php" class="checkout-btn" style="width:100%;margin-top:16px">Proceed to Payment →</a>
     </div>
   </div>
 
