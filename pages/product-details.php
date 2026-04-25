@@ -32,7 +32,7 @@ $img = productImagePath($product['image_url']);
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?= htmlspecialchars($product['name']) ?> - GreenTrack</title>
-	<link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="details-screen">
 <nav class="nav">

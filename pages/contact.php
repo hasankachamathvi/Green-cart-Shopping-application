@@ -10,7 +10,7 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us - GreenTrack</title>
-  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="contact-screen">
 <nav class="nav">
