@@ -6,14 +6,14 @@ session_start();
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>GreenTrack - Fresh Organic Marketplace</title>
+	<title>GreenCart - Fresh Organic Marketplace</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="homepage">
 <nav class="nav">
-	<a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
+	<a class="nav-logo" href="index.php"><span>🌿</span> GreenCart</a>
 	<div class="nav-right">
 		<a href="index.php" class="back-btn">Home</a>
 		<a href="products.php" class="back-btn">Product</a>
@@ -34,8 +34,8 @@ session_start();
     <img class="hero-banner-img" src="https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=1600&q=80" alt="Fresh vegetables banner">
     <div class="home-hero-content">
       <p class="hero-kicker">Farm to Door in Hours</p>
-      <h1>Welcome to the world of GreenTrack</h1>
-      <p>At GreenTrack, we bring fresh, sustainable, and organic produce to your doorstep with transparent sourcing and trusted quality.</p>
+      <h1>Welcome to the world of GreenCart</h1>
+      <p>At GreenCart, we bring fresh, sustainable, and organic produce to your doorstep with transparent sourcing and trusted quality.</p>
       <div class="hero-actions">
         <a href="products.php" class="hero-cta">View Products</a>
         <a href="contact.php" class="hero-ghost">Talk to Us</a>
@@ -89,7 +89,7 @@ session_start();
 </main>
 
 <footer class="site-footer">
-	<div>© <?= date('Y') ?> GreenTrack. All rights reserved.</div>
+	<div>© <?= date('Y') ?> GreenCart. All rights reserved.</div>
 	<div class="footer-links">
 		<a href="products.php">Products</a>
 		<a href="contact.php">Contact</a>

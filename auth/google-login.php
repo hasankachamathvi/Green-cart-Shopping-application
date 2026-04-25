@@ -26,12 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Google Login - GreenTrack</title>
+	<title>Google Login - GreenCart</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="auth-body auth-screen">
 	<div class="auth-container">
-		<div class="auth-logo">🌿 GreenTrack</div>
+		<div class="auth-logo">🌿 GreenCart</div>
 		<div class="auth-card">
 			<h1 class="auth-title">Google Sign-In</h1>
 			<p class="auth-subtitle">OAuth-ready flow with demo mode for development.</p>

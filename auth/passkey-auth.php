@@ -49,12 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Passkey Login - GreenTrack</title>
+	<title>Passkey Login - GreenCart</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="auth-body auth-screen">
 	<div class="auth-container">
-		<div class="auth-logo">🌿 GreenTrack</div>
+		<div class="auth-logo">🌿 GreenCart</div>
 		<div class="auth-card">
 			<h1 class="auth-title">Passkey Authentication</h1>
 			<p class="auth-subtitle">Register or sign in with a passkey identity.</p>

@@ -9,12 +9,12 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - GreenTrack</title>
+  <title>Contact Us - GreenCart</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="contact-screen">
 <nav class="nav">
-  <a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
+  <a class="nav-logo" href="index.php"><span>🌿</span> GreenCart</a>
   <div class="nav-right">
     <a href="index.php" class="back-btn">Home</a>
     <a href="products.php" class="back-btn">Product</a>
@@ -24,9 +24,9 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
 </nav>
 
 <section class="contact-hero">
-  <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1600&q=80" alt="Contact GreenTrack">
+  <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1600&q=80" alt="Contact GreenCart">
   <div class="contact-hero-overlay">
-    <h1>Contact GreenTrack</h1>
+    <h1>Contact GreenCart</h1>
     <p>Need support, custom orders, or supplier partnership details? Send us a message.</p>
   </div>
 </section>
@@ -70,7 +70,7 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
 
   <aside class="contact-info-card">
     <h3>Get in touch</h3>
-    <p><strong>Email:</strong> support@greentrack.local</p>
+    <p><strong>Email:</strong> support@GreenCart.local</p>
     <p><strong>Phone:</strong> +94 77 123 4567</p>
     <p><strong>Office:</strong> Colombo, Sri Lanka</p>
     <p class="contact-note">Your feedback is visible in the admin dashboard for quick handling and service improvement.</p>

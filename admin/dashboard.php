@@ -36,12 +36,12 @@ if (!isset($_SESSION['admin_id'])):
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin Login - GreenTrack</title>
+	<title>Admin Login - GreenCart</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="auth-body admin-auth-screen">
 	<div class="auth-container">
-		<div class="auth-logo">🧩 GreenTrack Admin</div>
+		<div class="auth-logo">🧩 GreenCart Admin</div>
 		<div class="auth-card">
 			<h1 class="auth-title">Admin Login</h1>
 			<p class="auth-subtitle">Use default credentials: admin / admin123</p>
@@ -97,12 +97,12 @@ $payments = $conn->query('SELECT payment_id, order_id, method, amount, status, t
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin Dashboard - GreenTrack</title>
+	<title>Admin Dashboard - GreenCart</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="admin-page">
 <nav class="nav">
-	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenTrack Admin</a>
+	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
 	<div class="nav-right">
 		<a href="manage-orders.php" class="back-btn">Orders</a>
 		<a href="manage-payments.php" class="back-btn">Payments</a>

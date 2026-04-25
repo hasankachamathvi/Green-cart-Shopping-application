@@ -42,12 +42,12 @@ $total = $subtotal + $delivery;
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Checkout & Payment - GreenTrack</title>
+	<title>Checkout & Payment - GreenCart</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="checkout-screen">
 <nav class="nav">
-	<a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
+	<a class="nav-logo" href="index.php"><span>🌿</span> GreenCart</a>
 	<div class="nav-right">
 		<a href="cart.php" class="back-btn">← Back to Cart</a>
 		<a href="products.php" class="back-btn">Products</a>

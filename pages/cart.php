@@ -41,7 +41,7 @@ function getEmoji($name) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Cart – FreshMart</title>
+  <title>Your Cart – GreenCart</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=20260425">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@ function getEmoji($name) {
 <body class="cart-screen">
 
 <nav class="nav">
-  <div class="nav-logo"><a href="products.php" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:8px"><span>🌿</span> FreshMart</a></div>
+  <div class="nav-logo"><a href="products.php" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:8px"><span>🌿</span> GreenCart</a></div>
   <div class="nav-right">
     <a href="products.php" class="back-btn">← Continue Shopping</a>
   </div>

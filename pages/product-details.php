@@ -31,12 +31,12 @@ $img = productImagePath($product['image_url']);
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?= htmlspecialchars($product['name']) ?> - GreenTrack</title>
+	<title><?= htmlspecialchars($product['name']) ?> - GreenCart</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260425">
 </head>
 <body class="details-screen">
 <nav class="nav">
-	<a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
+	<a class="nav-logo" href="index.php"><span>🌿</span> GreenCart</a>
 	<div class="nav-right">
 		<a href="products.php" class="back-btn">← Back to Products</a>
 		<a href="contact.php" class="back-btn">Contact Us</a>

@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login – FreshMart</title>
+  <title>Login – GreenCart</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=20260425">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="auth-body auth-screen">
 
 <div class="auth-container">
-  <div class="auth-logo">🌿 FreshMart</div>
+  <div class="auth-logo">🌿 GreenCart</div>
   <div class="auth-card">
     <h1 class="auth-title">Welcome back</h1>
     <p class="auth-subtitle">Sign in to your account</p>

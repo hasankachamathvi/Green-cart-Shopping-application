@@ -37,7 +37,7 @@ while ($row = $cart_result->fetch_assoc()) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FreshMart – Fresh Groceries</title>
+  <title>GreenCart – Fresh Groceries</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=20260425">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -46,7 +46,7 @@ while ($row = $cart_result->fetch_assoc()) {
 
 <!-- NAVBAR -->
 <nav class="nav">
-  <a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
+  <a class="nav-logo" href="index.php"><span>🌿</span> GreenCart</a>
   <div class="nav-right">
     <a href="index.php" class="back-btn">Home</a>
     <a href="products.php" class="back-btn">Product</a>
