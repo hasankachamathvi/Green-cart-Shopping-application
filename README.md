@@ -46,6 +46,9 @@ The root file redirects to home page.
 - Products + Cart: `http://localhost/Shopping-cart-application/pages/products.php`
 - Contact / Feedback: `http://localhost/Shopping-cart-application/pages/contact.php`
 - Checkout / Payment: `http://localhost/Shopping-cart-application/pages/checkout.php`
+- Google Login: `http://localhost/Shopping-cart-application/auth/google-login.php`
+- Facebook Login: `http://localhost/Shopping-cart-application/auth/facebook-login.php`
+- Passkey Login: `http://localhost/Shopping-cart-application/auth/passkey-auth.php`
 
 ## Admin
 
@@ -60,6 +63,14 @@ Admin panel includes:
 - Category management
 - Customer feedback handling
 - Payment and order tracking
+- Order status updates (pending/completed/cancelled)
+- Payment status updates (pending/paid/failed)
+
+## OAuth / Passkey Notes
+
+- OAuth configuration file: `config/oauth.php`
+- Current Google/Facebook and Passkey pages run in development-friendly demo mode.
+- Replace demo logic with production OAuth token verification / full WebAuthn challenge flow when deploying publicly.
 
 ## Notes
 

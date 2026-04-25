@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user['login_type'] === 'manual' && $user['password'] && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_name'] = $user['name'];
-            header("Location: products.php");
+          header("Location: ../pages/products.php");
             exit;
         } elseif ($user['login_type'] !== 'manual') {
             $error = 'This account uses ' . ucfirst($user['login_type']) . ' login.';

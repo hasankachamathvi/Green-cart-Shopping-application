@@ -38,6 +38,8 @@ $categories = $conn->query('SELECT category_id, category_name FROM categories OR
 	<div class="nav-right">
 		<a href="dashboard.php" class="back-btn">Dashboard</a>
 		<a href="manage-category.php" class="back-btn">Categories</a>
+		<a href="manage-orders.php" class="back-btn">Orders</a>
+		<a href="manage-payments.php" class="back-btn">Payments</a>
 	</div>
 </nav>
 
