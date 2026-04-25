@@ -19,20 +19,49 @@
 	- password: `` (empty by default in XAMPP)
 	- database: `shopping_cart_db`
 
+## Quick Start (Windows + WAMP)
+
+1. Copy this project folder into `C:/wamp64/www/`.
+2. Start WAMP and wait for green icon (Apache + MySQL running).
+3. Open phpMyAdmin at `http://localhost/phpmyadmin`.
+4. Import `database/shopping_cart.sql` and then `database/seed_data.sql`.
+5. Ensure DB config in `config/db.php` matches your WAMP MySQL credentials.
+
 ## Run
 
 Open in browser:
 
 `http://localhost/Shopping-cart-application/`
 
-The root file redirects to products page.
+The root file redirects to home page.
 
 ## Login/Register
 
 - Register: `http://localhost/Shopping-cart-application/auth/register.php`
 - Login: `http://localhost/Shopping-cart-application/auth/login.php`
 
+## Main Pages
+
+- Home: `http://localhost/Shopping-cart-application/pages/index.php`
+- Products + Cart: `http://localhost/Shopping-cart-application/pages/products.php`
+- Contact / Feedback: `http://localhost/Shopping-cart-application/pages/contact.php`
+- Checkout / Payment: `http://localhost/Shopping-cart-application/pages/checkout.php`
+
+## Admin
+
+- Admin URL: `http://localhost/Shopping-cart-application/admin/dashboard.php`
+- Default admin credentials:
+	- username: `admin`
+	- password: `admin123`
+
+Admin panel includes:
+
+- Product add/edit/delete
+- Category management
+- Customer feedback handling
+- Payment and order tracking
+
 ## Notes
 
-- Some social/admin files are placeholders and currently empty.
-- The sample data script is idempotent for the included categories/products.
+- Social login files are placeholders.
+- The sample data script is idempotent for included categories/products.

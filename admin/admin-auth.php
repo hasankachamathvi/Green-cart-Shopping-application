@@ -34,6 +34,33 @@ function ensureAdminSetup(mysqli $conn): void {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
+    $orderColumns = [];
+    $colRs = $conn->query("SHOW COLUMNS FROM orders");
+    if ($colRs) {
+        while ($col = $colRs->fetch_assoc()) {
+            $orderColumns[$col['Field']] = true;
+        }
+    }
+
+    if (!isset($orderColumns['customer_name'])) {
+        $conn->query("ALTER TABLE orders ADD COLUMN customer_name VARCHAR(120) NULL");
+    }
+    if (!isset($orderColumns['phone'])) {
+        $conn->query("ALTER TABLE orders ADD COLUMN phone VARCHAR(30) NULL");
+    }
+    if (!isset($orderColumns['address_line'])) {
+        $conn->query("ALTER TABLE orders ADD COLUMN address_line VARCHAR(255) NULL");
+    }
+    if (!isset($orderColumns['city'])) {
+        $conn->query("ALTER TABLE orders ADD COLUMN city VARCHAR(120) NULL");
+    }
+    if (!isset($orderColumns['payment_method'])) {
+        $conn->query("ALTER TABLE orders ADD COLUMN payment_method VARCHAR(40) NULL");
+    }
+    if (!isset($orderColumns['payment_status'])) {
+        $conn->query("ALTER TABLE orders ADD COLUMN payment_status VARCHAR(20) NULL");
+    }
+
     $rs = $conn->query("SELECT COUNT(*) AS c FROM admin_users");
     $count = $rs ? (int)$rs->fetch_assoc()['c'] : 0;
     if ($count === 0) {
