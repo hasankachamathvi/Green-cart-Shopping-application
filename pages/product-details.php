@@ -34,7 +34,7 @@ $img = productImagePath($product['image_url']);
 	<title><?= htmlspecialchars($product['name']) ?> - GreenTrack</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="details-screen">
 <nav class="nav">
 	<a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
 	<div class="nav-right">

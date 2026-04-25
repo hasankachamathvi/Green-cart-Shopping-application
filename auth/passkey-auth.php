@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<title>Passkey Login - GreenTrack</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="auth-body">
+<body class="auth-body auth-screen">
 	<div class="auth-container">
 		<div class="auth-logo">🌿 GreenTrack</div>
 		<div class="auth-card">

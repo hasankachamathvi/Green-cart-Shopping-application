@@ -42,7 +42,7 @@ while ($row = $cart_result->fetch_assoc()) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="products-page">
 
 <!-- NAVBAR -->
 <nav class="nav">

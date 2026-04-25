@@ -1496,3 +1496,227 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== SITEWIDE PROFESSIONAL REFRESH ===== */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--green-dark);
+}
+
+.hero-cta {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-ghost {
+  transition: all 0.2s ease;
+}
+
+.hero-ghost:hover {
+  transform: translateY(-1px);
+  background: var(--green-pale);
+}
+
+.nav {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.nav-logo {
+  letter-spacing: 0.2px;
+}
+
+.products-page .hero,
+.products-page .promo-banner,
+.products-page .section,
+.products-page .products-section {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.products-page .hero {
+  border-radius: 22px;
+  margin-top: 16px;
+}
+
+.products-page .promo-banner,
+.products-page .section,
+.products-page .products-section {
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
+.products-page .products-grid {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.products-page .product-card {
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(22, 66, 30, 0.08);
+}
+
+.products-page .product-img {
+  height: 180px;
+}
+
+.products-page .product-name {
+  font-size: 17px;
+}
+
+.products-page .product-price {
+  font-size: 18px;
+}
+
+.cart-screen .cart-page,
+.checkout-screen .checkout-page,
+.contact-screen .contact-main,
+.details-screen .product-details-wrap,
+.success-screen .success-page,
+.admin-page .admin-wrap,
+.admin-page .admin-form-wrap,
+.admin-page .admin-edit-wrap {
+  max-width: 1260px;
+}
+
+.cart-screen .page-title,
+.checkout-screen h1,
+.contact-screen h1,
+.details-screen h1,
+.admin-page h1 {
+  letter-spacing: 0.2px;
+}
+
+.cart-screen .cart-page-item,
+.checkout-screen .checkout-form-card,
+.checkout-screen .checkout-summary-card,
+.contact-screen .contact-card,
+.contact-screen .contact-info-card,
+.details-screen .product-details-image-card,
+.details-screen .product-details-content-card,
+.success-screen .success-card,
+.admin-page .admin-card,
+.admin-page .admin-table-card,
+.admin-page .admin-form-card {
+  box-shadow: 0 10px 24px rgba(24, 63, 32, 0.08);
+}
+
+.cart-screen .cart-page-item {
+  border-radius: 20px;
+}
+
+.checkout-screen .checkout-form-card,
+.checkout-screen .checkout-summary-card {
+  border-radius: 18px;
+}
+
+.contact-screen .contact-hero {
+  max-width: 1280px;
+  margin: 0 auto;
+  border-radius: 0 0 22px 22px;
+  overflow: hidden;
+}
+
+.contact-screen .contact-hero-overlay {
+  background: linear-gradient(100deg, rgba(17, 65, 29, 0.82) 0%, rgba(17, 65, 29, 0.45) 65%, rgba(17, 65, 29, 0.25) 100%);
+}
+
+.contact-screen .contact-info-card p {
+  margin-bottom: 8px;
+}
+
+.details-screen .details-main-image {
+  border: 1px solid #d9e6d5;
+}
+
+.details-screen .details-price {
+  font-size: 30px;
+}
+
+.auth-screen .auth-card,
+.admin-auth-screen .auth-card {
+  border-radius: 20px;
+  box-shadow: 0 14px 36px rgba(24, 63, 32, 0.18);
+}
+
+.auth-screen .auth-logo,
+.admin-auth-screen .auth-logo {
+  margin-bottom: 18px;
+}
+
+.admin-page {
+  background: linear-gradient(180deg, #f2f7f0 0%, #eef5eb 100%);
+}
+
+.admin-page .nav {
+  margin-bottom: 14px;
+}
+
+.admin-page .admin-table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-page .admin-table th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.admin-page .admin-table td {
+  background: #fff;
+}
+
+.site-footer a {
+  text-decoration: none;
+}
+
+@media (max-width: 900px) {
+  .products-page .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .products-page .promo-banner,
+  .products-page .section,
+  .products-page .products-section {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .products-page .hero {
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-right .back-btn,
+  .nav-right .logout-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .products-page .product-img {
+    height: 140px;
+  }
+
+  .products-page .product-name {
+    font-size: 14px;
+  }
+
+  .products-page .product-price {
+    font-size: 16px;
+  }
+}

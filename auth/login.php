@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="auth-body">
+<body class="auth-body auth-screen">
 
 <div class="auth-container">
   <div class="auth-logo">🌿 FreshMart</div>

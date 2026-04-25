@@ -39,7 +39,7 @@ if ($edit_id > 0) {
 	<title>Edit Products - Admin</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="admin-page">
 <nav class="nav">
 	<a class="nav-logo" href="dashboard.php"><span>🧩</span> Admin</a>
 	<div class="nav-right">

@@ -12,7 +12,7 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
   <title>Contact Us - GreenTrack</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="contact-screen">
 <nav class="nav">
   <a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
   <div class="nav-right">

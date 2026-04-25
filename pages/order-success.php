@@ -26,7 +26,7 @@ function paymentLabel($method) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="success-screen">
 <nav class="nav">
   <div class="nav-logo"><span>🌿</span> FreshMart</div>
 </nav>

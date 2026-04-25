@@ -34,7 +34,7 @@ $payments = $conn->query('SELECT payment_id, order_id, user_id, method, amount, 
   <title>Manage Payments - Admin</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="admin-page">
 <nav class="nav">
   <a class="nav-logo" href="dashboard.php"><span>🧩</span> Admin</a>
   <div class="nav-right">

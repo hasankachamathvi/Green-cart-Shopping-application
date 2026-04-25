@@ -39,7 +39,7 @@ if (!isset($_SESSION['admin_id'])):
 	<title>Admin Login - GreenTrack</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body class="auth-body">
+<body class="auth-body admin-auth-screen">
 	<div class="auth-container">
 		<div class="auth-logo">🧩 GreenTrack Admin</div>
 		<div class="auth-card">
@@ -100,7 +100,7 @@ $payments = $conn->query('SELECT payment_id, order_id, method, amount, status, t
 	<title>Admin Dashboard - GreenTrack</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="admin-page">
 <nav class="nav">
 	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenTrack Admin</a>
 	<div class="nav-right">

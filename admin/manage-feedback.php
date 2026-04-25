@@ -26,7 +26,7 @@ $feedbacks = $conn->query('SELECT feedback_id, category, name, email, message, s
   <title>Manage Feedback - Admin</title>
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="admin-page">
 <nav class="nav">
   <a class="nav-logo" href="dashboard.php"><span>🧩</span> Admin</a>
   <div class="nav-right">

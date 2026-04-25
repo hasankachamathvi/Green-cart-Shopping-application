@@ -45,7 +45,7 @@ $total = $subtotal + $delivery;
 	<title>Checkout & Payment - GreenTrack</title>
 	<link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="checkout-screen">
 <nav class="nav">
 	<a class="nav-logo" href="index.php"><span>🌿</span> GreenTrack</a>
 	<div class="nav-right">
