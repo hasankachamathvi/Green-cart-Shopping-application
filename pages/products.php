@@ -50,6 +50,7 @@ while ($row = $cart_result->fetch_assoc()) {
   <div class="nav-right">
     <a href="index.php" class="back-btn">Home</a>
     <a href="products.php" class="back-btn">Product</a>
+    <a href="about.php" class="back-btn">About Us</a>
     <a href="contact.php" class="back-btn">Contact Us</a>
     <input class="nav-search" type="text" placeholder="Search products..." id="searchInput" oninput="filterProducts()">
     <button class="cart-btn" onclick="toggleCart()">

@@ -51,6 +51,7 @@ $total = $subtotal + $delivery;
 	<div class="nav-right">
 		<a href="cart.php" class="back-btn">← Back to Cart</a>
 		<a href="products.php" class="back-btn">Products</a>
+		<a href="about.php" class="back-btn">About Us</a>
 	</div>
 </nav>
 

@@ -18,6 +18,7 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
   <div class="nav-right">
     <a href="index.php" class="back-btn">Home</a>
     <a href="products.php" class="back-btn">Product</a>
+    <a href="about.php" class="back-btn">About Us</a>
     <a href="contact.php" class="back-btn">Contact Us</a>
     <a href="../auth/login.php" class="logout-btn">Log In</a>
   </div>
@@ -70,7 +71,7 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
 
   <aside class="contact-info-card">
     <h3>Get in touch</h3>
-    <p><strong>Email:</strong> support@GreenCart.local</p>
+    <p><strong>Email:</strong> support@greencart.local</p>
     <p><strong>Phone:</strong> +94 77 123 4567</p>
     <p><strong>Office:</strong> Colombo, Sri Lanka</p>
     <p class="contact-note">Your feedback is visible in the admin dashboard for quick handling and service improvement.</p>

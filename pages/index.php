@@ -17,6 +17,7 @@ session_start();
 	<div class="nav-right">
 		<a href="index.php" class="back-btn">Home</a>
 		<a href="products.php" class="back-btn">Product</a>
+		<a href="about.php" class="back-btn">About Us</a>
 		<a href="contact.php" class="back-btn">Contact Us</a>
 		<?php if (isset($_SESSION['user_id'])): ?>
 			<a href="products.php" class="back-btn">Shop</a>
@@ -92,6 +93,7 @@ session_start();
 	<div>© <?= date('Y') ?> GreenCart. All rights reserved.</div>
 	<div class="footer-links">
 		<a href="products.php">Products</a>
+		<a href="about.php">About</a>
 		<a href="contact.php">Contact</a>
 		<a href="../admin/dashboard.php">Admin</a>
 	</div>
