@@ -1,5 +1,15 @@
 USE shopping_cart_db;
 
+-- Refresh image URLs for common products
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1447175008436-170170753d52?auto=format&fit=crop&w=800&q=80' WHERE name = 'Carrot';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80' WHERE name = 'Tomato';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=800&q=80' WHERE name = 'Broccoli';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80' WHERE name = 'Apple';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80' WHERE name = 'Banana';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80' WHERE name = 'Mango';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80' WHERE name = 'Butter Biscuit';
+UPDATE products SET image_url = 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80' WHERE name = 'Chocolate Cake';
+
 -- Categories (insert only if missing)
 INSERT INTO categories (category_name)
 SELECT 'Vegetables' FROM DUAL
