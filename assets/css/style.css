@@ -2158,3 +2158,90 @@ p {
     grid-template-columns: 1fr;
   }
 }
+
+/* ADMIN SIDEBAR LAYOUT */
+.admin-page {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  align-items: start;
+  min-height: 100vh;
+}
+
+.admin-page .nav {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  margin-bottom: 0;
+  border-radius: 0;
+  padding: 22px 14px;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 14px;
+}
+
+.admin-page .nav-logo {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.admin-page .nav-right {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.admin-page .back-btn,
+.admin-page .logout-btn {
+  display: block;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.admin-page .admin-wrap,
+.admin-page .admin-form-wrap,
+.admin-page .admin-edit-wrap {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px 24px 30px;
+}
+
+@media (max-width: 900px) {
+  .admin-page {
+    display: block;
+  }
+
+  .admin-page .nav {
+    position: static;
+    height: auto;
+    padding: 10px 14px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .admin-page .nav-right {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .admin-page .back-btn,
+  .admin-page .logout-btn {
+    display: inline-flex;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .admin-page .admin-wrap,
+  .admin-page .admin-form-wrap,
+  .admin-page .admin-edit-wrap {
+    padding: 16px 14px 24px;
+  }
+}
