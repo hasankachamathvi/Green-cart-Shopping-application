@@ -2,12 +2,18 @@
 body.admin-page {
   margin: 0;
   min-height: 100vh;
+  display: block !important;
 }
 
-body.admin-page .nav {
+/* Reset legacy offsets from older admin nav experiments */
+body.admin-page > * {
+  margin-left: 0 !important;
+}
+
+body.admin-page .admin-sidebar {
   position: fixed !important;
-  left: 0;
-  top: 0;
+  left: 0 !important;
+  top: 0 !important;
   width: 250px !important;
   height: 100vh !important;
   display: flex !important;
@@ -22,7 +28,7 @@ body.admin-page .nav {
   z-index: 999;
 }
 
-body.admin-page .nav-logo {
+body.admin-page .admin-sidebar .nav-logo {
   display: flex !important;
   align-items: center !important;
   gap: 8px;
@@ -30,7 +36,7 @@ body.admin-page .nav-logo {
   margin-bottom: 8px;
 }
 
-body.admin-page .nav-right {
+body.admin-page .admin-sidebar .nav-right {
   width: 100%;
   display: flex !important;
   flex-direction: column !important;
@@ -39,8 +45,8 @@ body.admin-page .nav-right {
   gap: 8px !important;
 }
 
-body.admin-page .back-btn,
-body.admin-page .logout-btn {
+body.admin-page .admin-sidebar .back-btn,
+body.admin-page .admin-sidebar .logout-btn {
   display: block !important;
   text-align: left;
   padding: 10px 12px !important;
@@ -51,13 +57,14 @@ body.admin-page .admin-wrap,
 body.admin-page .admin-form-wrap,
 body.admin-page .admin-edit-wrap {
   margin: 0 0 0 250px !important;
-  width: calc(100% - 250px) !important;
+  width: auto !important;
   max-width: none !important;
   padding: 24px !important;
+  box-sizing: border-box;
 }
 
 @media (max-width: 900px) {
-  body.admin-page .nav {
+  body.admin-page .admin-sidebar {
     width: 200px !important;
   }
 

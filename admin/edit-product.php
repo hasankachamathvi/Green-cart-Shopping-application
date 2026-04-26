@@ -45,7 +45,7 @@ if ($edit_id > 0) {
 	<a class="nav-logo" href="dashboard.php"><span>🧩</span> Admin</a>
 	<div class="nav-right">
 		<a href="dashboard.php" class="back-btn">Dashboard</a>
-		<a href="add-product.php" class="back-btn">Add Product</a>
+		<a href="add-product.php" class="back-btn">Manage Product</a>
 		<a href="manage-orders.php" class="back-btn">Orders</a>
 		<a href="manage-payments.php" class="back-btn">Payments</a>
 	</div>

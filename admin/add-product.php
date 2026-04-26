@@ -29,7 +29,7 @@ $categories = $conn->query('SELECT category_id, category_name FROM categories OR
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Add Product - Admin</title>
+	<title>Manage Product - Admin</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260430">
 	<link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
@@ -45,7 +45,7 @@ $categories = $conn->query('SELECT category_id, category_name FROM categories OR
 </nav>
 
 <main class="admin-form-wrap">
-	<h1>Add Product</h1>
+	<h1>Manage Product</h1>
 	<?php if ($message): ?><div class="contact-success"><?= htmlspecialchars($message) ?></div><?php endif; ?>
 
 	<form method="POST" class="admin-form-card">

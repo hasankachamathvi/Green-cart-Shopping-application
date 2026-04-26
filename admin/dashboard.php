@@ -108,7 +108,7 @@ $payments = $conn->query('SELECT payment_id, order_id, method, amount, status, t
 		<a href="manage-orders.php" class="back-btn">Orders</a>
 		<a href="manage-payments.php" class="back-btn">Payments</a>
 		<a href="manage-feedback.php" class="back-btn">Feedback</a>
-		<a href="add-product.php" class="back-btn">Add Product</a>
+		<a href="add-product.php" class="back-btn">Manage Product</a>
 		<a href="manage-category.php" class="back-btn">Categories</a>
 		<a href="dashboard.php?logout=1" class="logout-btn">Log Out</a>
 	</div>
