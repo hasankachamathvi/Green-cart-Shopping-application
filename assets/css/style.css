@@ -2212,29 +2212,29 @@ p {
 
 @media (max-width: 900px) {
   .admin-page {
-    display: block;
+    grid-template-columns: 210px minmax(0, 1fr);
   }
 
   .admin-page .nav {
-    position: static;
-    height: auto;
-    padding: 10px 14px;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
+    position: sticky;
+    height: 100vh;
+    padding: 16px 10px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
     gap: 8px;
   }
 
   .admin-page .nav-right {
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+    flex-wrap: nowrap;
     gap: 8px;
   }
 
   .admin-page .back-btn,
   .admin-page .logout-btn {
-    display: inline-flex;
+    display: block;
     padding: 7px 10px;
     font-size: 12px;
   }
@@ -2243,5 +2243,19 @@ p {
   .admin-page .admin-form-wrap,
   .admin-page .admin-edit-wrap {
     padding: 16px 14px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-page {
+    grid-template-columns: 170px minmax(0, 1fr);
+  }
+
+  .admin-page .nav {
+    padding: 12px 8px;
+  }
+
+  .admin-page .nav-logo {
+    font-size: 18px;
   }
 }

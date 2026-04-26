@@ -37,7 +37,7 @@ if (!isset($_SESSION['admin_id'])):
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin Login - GreenCart</title>
-	<link rel="stylesheet" href="../assets/css/style.css?v=20260426">
+	<link rel="stylesheet" href="../assets/css/style.css?v=20260427">
 </head>
 <body class="auth-body admin-auth-screen">
 	<div class="auth-container">
@@ -98,7 +98,7 @@ $payments = $conn->query('SELECT payment_id, order_id, method, amount, status, t
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin Dashboard - GreenCart</title>
-	<link rel="stylesheet" href="../assets/css/style.css?v=20260426">
+	<link rel="stylesheet" href="../assets/css/style.css?v=20260427">
 </head>
 <body class="admin-page">
 <nav class="nav">

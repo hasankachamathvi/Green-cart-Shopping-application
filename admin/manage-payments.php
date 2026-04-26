@@ -32,7 +32,7 @@ $payments = $conn->query('SELECT payment_id, order_id, user_id, method, amount, 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Payments - Admin</title>
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260426">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260427">
 </head>
 <body class="admin-page">
 <nav class="nav">
