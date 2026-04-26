@@ -25,6 +25,7 @@ $orders = $conn->query('SELECT order_id, user_id, customer_name, phone, city, to
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Orders - Admin</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=20260429">
+  <link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
 <nav class="nav">

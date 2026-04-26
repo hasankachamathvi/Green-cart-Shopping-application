@@ -25,6 +25,7 @@ $feedbacks = $conn->query('SELECT feedback_id, category, name, email, message, s
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Feedback - Admin</title>
   <link rel="stylesheet" href="../assets/css/style.css?v=20260429">
+  <link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
 <nav class="nav">
