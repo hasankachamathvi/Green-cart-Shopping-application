@@ -2161,114 +2161,149 @@ p {
 
 /* ADMIN SIDEBAR LAYOUT */
 .admin-page {
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  align-items: start;
+  display: flex !important;
+  flex-direction: row !important;
   min-height: 100vh;
-  grid-template-rows: 1fr;
 }
 
 .admin-page .nav {
-  position: sticky !important;
+  position: fixed !important;
+  left: 0 !important;
   top: 0 !important;
+  width: 260px !important;
   height: 100vh !important;
+  background: var(--green-dark) !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
   justify-content: flex-start !important;
-  margin-bottom: 0 !important;
-  border-radius: 0 !important;
   padding: 22px 14px !important;
-  gap: 14px;
-  grid-column: 1;
-  grid-row: 1 / -1;
+  gap: 14px !important;
+  overflow-y: auto !important;
   z-index: 50;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+}
+
+.admin-page .nav::before {
+  content: '';
+  display: block;
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -1;
 }
 
 .admin-page .nav-logo {
   font-size: 22px;
-  margin-bottom: 4px;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 8px !important;
-  flex-wrap: wrap;
+  margin-bottom: 8px;
+  color: white !important;
+  display: block !important;
+  text-decoration: none !important;
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 700 !important;
 }
 
 .admin-page .nav-right {
-  width: 100%;
   display: flex !important;
   flex-direction: column !important;
-  align-items: stretch !important;
-  gap: 10px;
-  flex-wrap: nowrap;
+  gap: 10px !important;
+  width: 100%;
 }
 
 .admin-page .back-btn,
 .admin-page .logout-btn {
-  display: block;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 14px;
+  display: block !important;
+  color: rgba(255,255,255,0.8) !important;
+  text-decoration: none !important;
+  border: 1px solid rgba(255,255,255,0.25) !important;
+  border-radius: 8px !important;
+  padding: 10px 12px !important;
+  font-size: 14px !important;
+  transition: all 0.2s !important;
+  text-align: center;
+}
+
+.admin-page .back-btn:hover,
+.admin-page .logout-btn:hover {
+  background: rgba(255,255,255,0.12) !important;
+}
+
+body.admin-page > * {
+  margin-left: 260px;
 }
 
 .admin-page .admin-wrap,
 .admin-page .admin-form-wrap,
 .admin-page .admin-edit-wrap {
-  width: 100%;
+  width: calc(100% - 260px);
   max-width: none;
   margin: 0;
   padding: 24px 24px 30px;
-  grid-column: 2;
-  grid-row: 1;
 }
 
 @media (max-width: 900px) {
-  .admin-page {
-    grid-template-columns: 210px minmax(0, 1fr);
-  }
-
   .admin-page .nav {
-    position: sticky;
-    height: 100vh;
-    padding: 16px 10px;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 8px;
+    width: 210px !important;
   }
 
-  .admin-page .nav-right {
-    width: 100%;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 8px;
-  }
-
-  .admin-page .back-btn,
-  .admin-page .logout-btn {
-    display: block;
-    padding: 7px 10px;
-    font-size: 12px;
+  body.admin-page > * {
+    margin-left: 210px;
   }
 
   .admin-page .admin-wrap,
   .admin-page .admin-form-wrap,
   .admin-page .admin-edit-wrap {
+    width: calc(100% - 210px);
     padding: 16px 14px 24px;
+  }
+
+  .admin-page .back-btn,
+  .admin-page .logout-btn {
+    font-size: 12px !important;
+    padding: 8px 10px !important;
   }
 }
 
 @media (max-width: 600px) {
   .admin-page {
-    grid-template-columns: 170px minmax(0, 1fr);
+    flex-direction: column;
   }
 
   .admin-page .nav {
-    padding: 12px 8px;
+    width: 100% !important;
+    height: auto !important;
+    position: sticky !important;
+    top: 0 !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 12px 14px !important;
+    align-items: center !important;
+    gap: 8px;
+    z-index: 100;
   }
 
   .admin-page .nav-logo {
+    margin-bottom: 0;
     font-size: 18px;
+  }
+
+  .admin-page .nav-right {
+    flex-direction: row !important;
+    gap: 6px;
+  }
+
+  body.admin-page > * {
+    margin-left: 0;
+  }
+
+  .admin-page .admin-wrap,
+  .admin-page .admin-form-wrap,
+  .admin-page .admin-edit-wrap {
+    width: 100%;
+    padding: 14px 12px 20px;
   }
 }
