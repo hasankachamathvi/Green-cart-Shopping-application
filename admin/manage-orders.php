@@ -24,11 +24,11 @@ $orders = $conn->query('SELECT order_id, user_id, customer_name, phone, city, to
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Orders - Admin</title>
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260429">
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260430">
   <link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
-<nav class="nav">
+<nav class="admin-sidebar">
   <a class="nav-logo" href="dashboard.php"><span>🧩</span> Admin</a>
   <div class="nav-right">
     <a href="dashboard.php" class="back-btn">Dashboard</a>

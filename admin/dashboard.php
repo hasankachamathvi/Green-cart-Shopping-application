@@ -98,11 +98,11 @@ $payments = $conn->query('SELECT payment_id, order_id, method, amount, status, t
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Admin Dashboard - GreenCart</title>
-	<link rel="stylesheet" href="../assets/css/style.css?v=20260429">
+	<link rel="stylesheet" href="../assets/css/style.css?v=20260430">
 	<link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
-<nav class="nav">
+<nav class="admin-sidebar">
 	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
 	<div class="nav-right">
 		<a href="manage-orders.php" class="back-btn">Orders</a>
