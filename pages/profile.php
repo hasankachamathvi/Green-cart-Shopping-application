@@ -72,6 +72,7 @@ $order_count_row = $conn->query('SELECT COUNT(*) AS total_orders, COALESCE(SUM(t
         <p style="color:var(--muted)">No orders yet.</p>
       <?php endif; ?>
     </div>
+    <a href="order-history.php" class="checkout-btn" style="display: block; text-align: center; margin-top: 15px; text-decoration: none;">View All Orders →</a>
   </aside>
 </main>
 </body>

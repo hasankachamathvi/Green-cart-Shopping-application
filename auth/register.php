@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../config/db.php");
+include("../config/email.php");
 
 $error = '';
 $success = '';
@@ -31,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $user_id = $conn->insert_id;
                 // Create cart for new user
                 $conn->query("INSERT INTO carts (user_id) VALUES ($user_id)");
+                
+                // Send welcome email
+                sendWelcomeEmail($email, $name);
+                
                 $_SESSION['user_id'] = $user_id;
                 $_SESSION['user_name'] = $name;
                 header("Location: ../pages/products.php");

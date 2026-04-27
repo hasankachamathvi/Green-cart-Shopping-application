@@ -105,6 +105,7 @@ $payments = $conn->query('SELECT payment_id, order_id, method, amount, status, t
 <nav class="admin-sidebar">
 	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
 	<div class="nav-right">
+		<a href="manage-users.php" class="back-btn">👥 Users</a>
 		<a href="manage-orders.php" class="back-btn">Orders</a>
 		<a href="manage-payments.php" class="back-btn">Payments</a>
 		<a href="manage-feedback.php" class="back-btn">Feedback</a>

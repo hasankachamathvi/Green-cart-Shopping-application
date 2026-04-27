@@ -122,6 +122,34 @@ $pay_stmt->execute();
 // Clear cart
 $conn->query("DELETE FROM cart_items WHERE cart_id = $cart_id");
 
+// Send order confirmation email
+$userStmt = $conn->prepare("SELECT name, email FROM users WHERE user_id = ?");
+$userStmt->bind_param("i", $user_id);
+$userStmt->execute();
+$userData = $userStmt->get_result()->fetch_assoc();
+
+if ($userData) {
+    include("../config/email.php");
+    
+    // Prepare items for email
+    $emailItems = [];
+    foreach ($items as $item) {
+        $productStmt = $conn->prepare("SELECT name FROM products WHERE product_id = ?");
+        $productStmt->bind_param("i", $item['product_id']);
+        $productStmt->execute();
+        $productData = $productStmt->get_result()->fetch_assoc();
+        
+        $emailItems[] = [
+            'name' => $productData['name'] ?? 'Product',
+            'quantity' => $item['quantity'],
+            'price' => $item['price'],
+        ];
+    }
+    
+    // Send email
+    sendOrderConfirmationEmail($conn, $order_id, $userData['email'], $userData['name'], $emailItems, $total);
+}
+
 $_SESSION['order_success'] = $order_id;
 $_SESSION['payment_method'] = $payment_method;
 $_SESSION['payment_status'] = $payment_status;
