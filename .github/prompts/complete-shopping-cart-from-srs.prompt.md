@@ -1,5 +1,5 @@
 ---
-description: "Complete missing shopping-cart tasks from SRS and provide a phpMyAdmin-ready SQL file"
+description: "Implement unfinished shopping-cart SRS features and always output a phpMyAdmin-ready SQL at database/shopping_cart.sql"
 name: "Complete Shopping Cart From SRS"
 argument-hint: "Paste missing features, constraints, or extra requirements"
 agent: "agent"
@@ -10,6 +10,11 @@ Primary goal:
 - Complete unfinished features in the existing codebase.
 - Keep changes minimal and production-safe.
 - Produce or update a SQL import file that can be uploaded in phpMyAdmin.
+
+Hard defaults (do not ask unless user explicitly overrides):
+- Canonical SQL file is always `database/shopping_cart.sql`.
+- Checkout includes order summary now, plus placeholder payment-gateway schema only (no live gateway integration).
+- Scope is workspace-first (shared project files), not user-profile prompt behavior.
 
 Project context (fixed):
 - Stack: PHP, MySQL, HTML/CSS/JS
@@ -31,6 +36,7 @@ SRS summary to enforce:
 
 4. Checkout
 - Show order summary before payment.
+- Include placeholder payment data model support for future integration.
 
 5. Admin Features
 - Manage products and categories (CRUD).
@@ -45,8 +51,14 @@ When running this prompt, follow this execution workflow:
 1. Scan project files and map implemented vs missing requirements.
 2. Implement missing parts directly in the codebase.
 3. Validate key flows (auth, browse, cart update, checkout summary, admin CRUD).
-4. Create or update SQL schema/seed file for import.
+4. Create or update SQL schema/seed file for import at `database/shopping_cart.sql`.
 5. Report exactly what was completed and what remains (if anything).
+
+Implementation rules:
+- Prefer updating existing files over introducing new architecture.
+- Keep API and UI behavior backward-compatible where possible.
+- Add basic input validation and server-side checks where missing.
+- If a requirement cannot be completed, explain blocker and provide the smallest viable fallback.
 
 Required output format:
 1. Completed items
@@ -57,13 +69,23 @@ Required output format:
 
 3. Database file for phpMyAdmin
 - Provide exact path and filename.
-- Preferred output file: `database/shopping_cart.sql`
-- If a new file is created, provide that exact filename and include import notes.
+- Required output file: `database/shopping_cart.sql`
+- Do not switch filenames unless user explicitly requests it.
 
-4. Import instructions
+4. SQL contents checklist
+- Include table creation order with foreign keys handled safely.
+- Include essential seed data for categories and sample products.
+- Include payment placeholder table(s) (e.g., payments/transactions status fields) without external gateway coupling.
+- Ensure import works on a fresh phpMyAdmin database.
+
+5. Import instructions
 - Short steps for phpMyAdmin import.
 
-5. Remaining gaps
+6. Acceptance check
+- Confirm all core SRS items are either completed or listed under remaining gaps.
+- Confirm the SQL file path is exactly `database/shopping_cart.sql`.
+
+7. Remaining gaps
 - Only if anything is still pending, with blockers.
 
 User-provided extra requirements:
