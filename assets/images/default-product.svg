@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="Default product image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8f5e3"/>
+      <stop offset="100%" stop-color="#cfe8c4"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d5a27"/>
+      <stop offset="100%" stop-color="#4a8c3f"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" rx="56" fill="url(#bg)"/>
+  <circle cx="640" cy="160" r="120" fill="#ffffff" opacity="0.35"/>
+  <circle cx="150" cy="620" r="150" fill="#ffffff" opacity="0.25"/>
+  <rect x="190" y="230" width="420" height="320" rx="36" fill="#ffffff" opacity="0.88"/>
+  <rect x="245" y="300" width="310" height="180" rx="24" fill="url(#accent)" opacity="0.12"/>
+  <path d="M265 470c58-110 126-165 214-165s156 55 214 165" fill="none" stroke="url(#accent)" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="340" cy="365" r="36" fill="#7aba6e"/>
+  <circle cx="410" cy="340" r="48" fill="#4a8c3f"/>
+  <circle cx="485" cy="368" r="40" fill="#c8a84b"/>
+  <path d="M410 292c0-32 18-60 44-74" fill="none" stroke="#2d5a27" stroke-width="12" stroke-linecap="round"/>
+  <path d="M422 246c28-18 68-18 94 0-26 28-64 44-94 44-6-15-6-30 0-44z" fill="#4a8c3f" opacity="0.8"/>
+  <text x="400" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" fill="#2d5a27" font-weight="700">GreenCart Product</text>
+</svg>

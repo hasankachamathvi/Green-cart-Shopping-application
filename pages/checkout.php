@@ -2,7 +2,12 @@
 session_start();
 include("../config/db.php");
 
-$user_id = $_SESSION['user_id'] ?? 1;
+if (!isset($_SESSION['user_id'])) {
+	header('Location: ../auth/login.php?redirect=../pages/checkout.php');
+	exit;
+}
+
+$user_id = (int)$_SESSION['user_id'];
 $checkout_error = $_SESSION['checkout_error'] ?? '';
 unset($_SESSION['checkout_error']);
 
@@ -52,6 +57,8 @@ $total = $subtotal + $delivery;
 		<a href="cart.php" class="back-btn">← Back to Cart</a>
 		<a href="products.php" class="back-btn">Products</a>
 		<a href="about.php" class="back-btn">About Us</a>
+		<a href="profile.php" class="back-btn">Profile</a>
+		<a href="../auth/logout.php" class="logout-btn">Log Out</a>
 	</div>
 </nav>
 

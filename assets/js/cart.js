@@ -54,6 +54,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ── Add to cart (JS-side for instant UI, real add via PHP form) ──
   window.addToCart = function (id, name, price, emoji) {
+    if (typeof window.canAddToCart !== 'undefined' && !window.canAddToCart) {
+      window.location.href = window.loginUrl || '../auth/login.php';
+      return;
+    }
+
     // Submit a hidden form to the PHP API
     const form = document.createElement('form');
     form.method = 'POST';

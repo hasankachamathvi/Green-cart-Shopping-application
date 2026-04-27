@@ -2,7 +2,12 @@
 session_start();
 include("../config/db.php");
 
-$user_id = $_SESSION['user_id'] ?? 1;
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php?redirect=../pages/checkout.php');
+    exit;
+}
+
+$user_id = (int)$_SESSION['user_id'];
 
 $full_name = trim($_POST['full_name'] ?? '');
 $phone = trim($_POST['phone'] ?? '');

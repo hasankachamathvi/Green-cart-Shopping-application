@@ -2,6 +2,11 @@
 session_start();
 include("../config/db.php");
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php?redirect=../pages/cart.php');
+    exit;
+}
+
 $id     = (int) $_POST['cart_item_id'];
 $action = $_POST['action'];
 

@@ -1,10 +1,11 @@
 <?php
 session_start();
 include("../config/db.php");
-$user_id = $_SESSION['user_id'] ?? 1;
+$is_logged_in = isset($_SESSION['user_id']);
+$login_url = '../auth/login.php?redirect=' . urlencode('../pages/products.php');
 
 function productImagePath($image_url) {
-  if (!$image_url) return '';
+  if (!$image_url) return "../assets/images/default-product.svg";
   if (preg_match('/^https?:\/\//i', $image_url)) return $image_url;
   return "../assets/images/" . $image_url;
 }
@@ -24,12 +25,15 @@ while ($row = $prods_result->fetch_assoc()) $products[] = $row;
 
 // Get cart items for this user
 $cart_items = [];
-$cart_sql = "SELECT ci.product_id, ci.quantity FROM cart_items ci
-             JOIN carts ca ON ci.cart_id = ca.cart_id
-             WHERE ca.user_id = $user_id";
-$cart_result = $conn->query($cart_sql);
-while ($row = $cart_result->fetch_assoc()) {
-    $cart_items[$row['product_id']] = $row['quantity'];
+if ($is_logged_in) {
+  $user_id = (int)$_SESSION['user_id'];
+  $cart_sql = "SELECT ci.product_id, ci.quantity FROM cart_items ci
+               JOIN carts ca ON ci.cart_id = ca.cart_id
+               WHERE ca.user_id = $user_id";
+  $cart_result = $conn->query($cart_sql);
+  while ($row = $cart_result->fetch_assoc()) {
+      $cart_items[$row['product_id']] = $row['quantity'];
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -52,11 +56,18 @@ while ($row = $cart_result->fetch_assoc()) {
     <a href="products.php" class="back-btn">Product</a>
     <a href="about.php" class="back-btn">About Us</a>
     <a href="contact.php" class="back-btn">Contact Us</a>
+    <?php if ($is_logged_in): ?>
+      <a href="profile.php" class="back-btn">Profile</a>
+    <?php endif; ?>
     <input class="nav-search" type="text" placeholder="Search products..." id="searchInput" oninput="filterProducts()">
     <button class="cart-btn" onclick="toggleCart()">
       🛒 Cart <span class="cart-count" id="cartCount">0</span>
     </button>
-    <a href="../auth/logout.php" class="logout-btn">Logout</a>
+    <?php if ($is_logged_in): ?>
+      <a href="../auth/logout.php" class="logout-btn">Logout</a>
+    <?php else: ?>
+      <a href="../auth/login.php?redirect=../pages/products.php" class="logout-btn">Log In</a>
+    <?php endif; ?>
   </div>
 </nav>
 
@@ -100,12 +111,8 @@ while ($row = $cart_result->fetch_assoc()) {
       <div class="in-cart-badge<?= $qty > 0 ? ' show' : '' ?>" id="badge-<?= $p['product_id'] ?>"><?= $qty ?> in cart</div>
       <a href="product-details.php?id=<?= $p['product_id'] ?>" style="text-decoration:none">
         <div class="product-img">
-          <?php if ($imgPath): ?>
-            <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="product-img-tag" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-            <span class="product-fallback-emoji" style="display:none"><?= $emoji ?></span>
-          <?php else: ?>
-            <span class="product-fallback-emoji" style="display:flex"><?= $emoji ?></span>
-          <?php endif; ?>
+          <img src="<?= htmlspecialchars($imgPath) ?>" alt="<?= htmlspecialchars($p['name']) ?>" class="product-img-tag" onerror="this.onerror=null;this.src='../assets/images/default-product.svg';this.alt='Default product image';">
+          <span class="product-fallback-emoji" style="display:none"><?= $emoji ?></span>
         </div>
       </a>
       <div class="product-info">
@@ -113,7 +120,11 @@ while ($row = $cart_result->fetch_assoc()) {
         <div class="product-desc"><?= htmlspecialchars($p['description']) ?></div>
         <div class="product-footer">
           <div class="product-price">Rs.<?= number_format($p['price'], 2) ?><span>/unit</span></div>
-          <button class="add-btn" onclick="addToCart(<?= $p['product_id'] ?>, '<?= addslashes($p['name']) ?>', <?= $p['price'] ?>, '<?= $emoji ?>')">+</button>
+          <?php if ($is_logged_in): ?>
+            <button class="add-btn" onclick="addToCart(<?= $p['product_id'] ?>, '<?= addslashes($p['name']) ?>', <?= $p['price'] ?>, '<?= $emoji ?>')">+</button>
+          <?php else: ?>
+            <a class="add-btn" href="<?= htmlspecialchars($login_url) ?>" style="text-decoration:none">+</a>
+          <?php endif; ?>
         </div>
         <a href="product-details.php?id=<?= $p['product_id'] ?>" class="details-link">View details</a>
       </div>
@@ -160,7 +171,7 @@ function getEmoji($name) {
     ];
     $name = strtolower($name);
     foreach ($map as $key => $emoji) {
-        if (str_contains($name, $key)) return $emoji;
+    if (strpos($name, $key) !== false) return $emoji;
     }
     return '🛒';
 }
@@ -168,6 +179,8 @@ function getEmoji($name) {
 
 <!-- Pass PHP cart data to JS -->
 <script>
+window.canAddToCart = <?= $is_logged_in ? 'true' : 'false' ?>;
+window.loginUrl = <?= json_encode($login_url) ?>;
 const initialCart = <?= json_encode(array_map(fn($pid, $qty) => ['id' => $pid, 'qty' => $qty], array_keys($cart_items), array_values($cart_items))) ?>;
 </script>
 <script src="../assets/js/cart.js"></script>

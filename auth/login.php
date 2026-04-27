@@ -3,6 +3,7 @@ session_start();
 include("../config/db.php");
 
 $error = '';
+$redirect = $_POST['redirect'] ?? ($_GET['redirect'] ?? '../pages/products.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user['login_type'] === 'manual' && $user['password'] && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['user_name'] = $user['name'];
-          header("Location: ../pages/products.php");
+          header("Location: " . $redirect);
             exit;
         } elseif ($user['login_type'] !== 'manual') {
             $error = 'This account uses ' . ucfirst($user['login_type']) . ' login.';
@@ -54,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form method="POST" class="auth-form">
+      <input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
       <div class="form-group">
         <label>Email address</label>
         <input type="email" name="email" required placeholder="you@email.com" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">

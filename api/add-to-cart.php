@@ -2,7 +2,12 @@
 session_start();
 include("../config/db.php");
 
-$user_id = $_SESSION['user_id'] ?? 1;
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php?redirect=' . urlencode($_SERVER['HTTP_REFERER'] ?? '../pages/products.php'));
+    exit;
+}
+
+$user_id = (int) $_SESSION['user_id'];
 $product_id = (int) $_POST['product_id'];
 $quantity   = max(1, (int) ($_POST['quantity'] ?? 1));
 

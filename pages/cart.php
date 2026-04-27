@@ -1,7 +1,13 @@
 <?php
 session_start();
 include("../config/db.php");
-$user_id = $_SESSION['user_id'] ?? 1;
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php?redirect=../pages/cart.php');
+    exit;
+}
+
+$user_id = (int)$_SESSION['user_id'];
 
 // Get cart
 $cart_sql = "SELECT * FROM carts WHERE user_id = $user_id";
@@ -31,7 +37,7 @@ function getEmoji($name) {
         'cracker'=>'🫙','potato'=>'🥔','onion'=>'🧅'];
     $name = strtolower($name);
     foreach ($map as $key => $emoji) {
-        if (str_contains($name, $key)) return $emoji;
+        if (strpos($name, $key) !== false) return $emoji;
     }
     return '🛒';
 }
@@ -52,6 +58,8 @@ function getEmoji($name) {
   <div class="nav-logo"><a href="products.php" style="color:inherit;text-decoration:none;display:flex;align-items:center;gap:8px"><span>🌿</span> GreenCart</a></div>
   <div class="nav-right">
     <a href="products.php" class="back-btn">← Continue Shopping</a>
+    <a href="profile.php" class="back-btn">Profile</a>
+    <a href="../auth/logout.php" class="logout-btn">Log Out</a>
   </div>
 </nav>
 

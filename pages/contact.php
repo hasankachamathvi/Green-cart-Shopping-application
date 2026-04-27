@@ -20,7 +20,12 @@ unset($_SESSION['feedback_success'], $_SESSION['feedback_error']);
     <a href="products.php" class="back-btn">Product</a>
     <a href="about.php" class="back-btn">About Us</a>
     <a href="contact.php" class="back-btn">Contact Us</a>
-    <a href="../auth/login.php" class="logout-btn">Log In</a>
+    <?php if (isset($_SESSION['user_id'])): ?>
+      <a href="profile.php" class="back-btn">Profile</a>
+      <a href="../auth/logout.php" class="logout-btn">Log Out</a>
+    <?php else: ?>
+      <a href="../auth/login.php" class="logout-btn">Log In</a>
+    <?php endif; ?>
   </div>
 </nav>
 

@@ -21,6 +21,7 @@ session_start();
 		<a href="contact.php" class="back-btn">Contact Us</a>
 		<?php if (isset($_SESSION['user_id'])): ?>
 			<a href="products.php" class="back-btn">Shop</a>
+			<a href="profile.php" class="back-btn">Profile</a>
 			<a href="../auth/logout.php" class="logout-btn">Log Out</a>
 		<?php else: ?>
 			<a href="../auth/login.php" class="logout-btn">Log In</a>
