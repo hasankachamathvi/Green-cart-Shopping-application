@@ -35,6 +35,17 @@ function getGoogleRedirectUri(): string {
     return 'http://localhost/Shopping-cart-application/auth/google-callback.php';
 }
 
+function getFacebookRedirectUri(): string {
+    $oauth = include(__DIR__ . '/../config/oauth.php');
+    $configured = trim((string)($oauth['facebook']['redirect_uri'] ?? ''));
+
+    if ($configured !== '') {
+        return $configured;
+    }
+
+    return 'http://localhost/Shopping-cart-application/auth/facebook-callback.php';
+}
+
 function buildGoogleAuthUrl(string $clientId, string $redirectUri, string $state): string {
     $params = [
         'client_id' => $clientId,
@@ -48,6 +59,17 @@ function buildGoogleAuthUrl(string $clientId, string $redirectUri, string $state
     ];
 
     return 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+}
+
+function buildFacebookAuthUrl(string $appId, string $redirectUri, string $state): string {
+    $params = [
+        'client_id' => $appId,
+        'redirect_uri' => $redirectUri,
+        'state' => $state,
+        'scope' => 'email,public_profile',
+    ];
+
+    return 'https://www.facebook.com/v20.0/dialog/oauth?' . http_build_query($params, '', '&', PHP_QUERY_RFC3986);
 }
 
 function httpPostForm(string $url, array $fields): array {

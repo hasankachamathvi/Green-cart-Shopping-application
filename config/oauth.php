@@ -9,6 +9,7 @@ return [
     'facebook' => [
         'app_id' => '',
         'app_secret' => '',
+        'redirect_uri' => 'http://localhost/Shopping-cart-application/auth/facebook-callback.php',
     ],
     'demo_mode' => true,
 ];
