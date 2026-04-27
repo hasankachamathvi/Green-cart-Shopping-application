@@ -57,8 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 								} else {
 										completeLogin($user, $redirect);
 								}
+						} else {
+								$error = 'No passkey user found. Register first.';
 						}
-						$error = 'No passkey user found. Register first.';
 				}
 		}
 }
