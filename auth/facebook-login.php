@@ -11,6 +11,14 @@ if ($redirect !== '../pages/products.php') {
 		$_SESSION['redirect_url'] = $redirect;
 }
 
+if ($demo && $_SERVER['REQUEST_METHOD'] === 'GET') {
+		$user = loginOrCreateSocialUser($conn, 'Facebook User', 'facebook@greencart.com', 'facebook');
+		if ($user) {
+				completeLogin($user, $redirect);
+		}
+		$error = 'Unable to login right now. Please try again.';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$name = trim($_POST['name'] ?? 'Facebook User');
 		$email = trim($_POST['email'] ?? '');

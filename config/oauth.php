@@ -4,6 +4,7 @@ return [
     'google' => [
         'client_id' => '',
         'client_secret' => '',
+        'redirect_uri' => 'http://localhost/Shopping-cart-application/auth/google-callback.php',
     ],
     'facebook' => [
         'app_id' => '',

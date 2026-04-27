@@ -10,6 +10,34 @@ if ($redirect !== '../pages/products.php') {
 		$_SESSION['redirect_url'] = $redirect;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+		$existingStmt = $conn->prepare("SELECT user_id, name, email, passkey_id FROM users WHERE email = ? LIMIT 1");
+		$demoEmail = 'passkey@greencart.com';
+		$demoName = 'Passkey User';
+		$demoPasskeyId = 'browser-passkey';
+		$existingStmt->bind_param('s', $demoEmail);
+		$existingStmt->execute();
+		$existing = $existingStmt->get_result()->fetch_assoc();
+
+		if ($existing) {
+				$uid = (int)$existing['user_id'];
+				$up = $conn->prepare("UPDATE users SET login_type = 'passkey', passkey_id = ?, name = ? WHERE user_id = ?");
+				$up->bind_param('ssi', $demoPasskeyId, $demoName, $uid);
+				if ($up->execute()) {
+						$conn->query("INSERT IGNORE INTO carts (user_id) VALUES ($uid)");
+						completeLogin(['user_id' => $uid, 'name' => $demoName], $redirect);
+				}
+		} else {
+				$stmt = $conn->prepare("INSERT INTO users (name, email, password, login_type, passkey_id) VALUES (?, ?, NULL, 'passkey', ?)");
+				$stmt->bind_param('sss', $demoName, $demoEmail, $demoPasskeyId);
+				if ($stmt->execute()) {
+						$uid = (int)$conn->insert_id;
+						$conn->query("INSERT IGNORE INTO carts (user_id) VALUES ($uid)");
+						completeLogin(['user_id' => $uid, 'name' => $demoName], $redirect);
+				}
+		}
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$name = trim($_POST['name'] ?? 'Passkey User');
 		$email = trim($_POST['email'] ?? '');

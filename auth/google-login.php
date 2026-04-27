@@ -6,9 +6,21 @@ $oauth = include(__DIR__ . '/../config/oauth.php');
 $demo = (bool)($oauth['demo_mode'] ?? true);
 $error = '';
 $redirect = safeRedirectTarget($_POST['redirect'] ?? ($_GET['redirect'] ?? '../pages/products.php'));
+$google = $oauth['google'] ?? [];
+$clientId = trim((string)($google['client_id'] ?? ''));
+$clientSecret = trim((string)($google['client_secret'] ?? ''));
+$redirectUri = getGoogleRedirectUri();
+$useRealOauth = ($clientId !== '' && $clientSecret !== '');
 
 if ($redirect !== '../pages/products.php') {
 		$_SESSION['redirect_url'] = $redirect;
+}
+
+if ($useRealOauth && $_SERVER['REQUEST_METHOD'] === 'GET') {
+		$state = bin2hex(random_bytes(16));
+		$_SESSION['google_oauth_state'] = $state;
+		header('Location: ' . buildGoogleAuthUrl($clientId, $redirectUri, $state));
+		exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -39,9 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<div class="auth-logo">🌿 GreenCart</div>
 		<div class="auth-card">
 			<h1 class="auth-title">Google Sign-In</h1>
-			<p class="auth-subtitle">OAuth-ready flow with demo mode for development.</p>
+			<p class="auth-subtitle"><?= $useRealOauth ? 'Continue with your Google account.' : 'OAuth-ready flow with demo mode for development.' ?></p>
 			<?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
-			<?php if ($demo): ?>
+			<?php if ($useRealOauth): ?>
+				<p class="oauth-note">You will be redirected to Google to choose an account and approve sign-in.</p>
+				<a href="login.php?redirect=<?= urlencode($redirect) ?>" class="auth-link-btn" style="margin-top:14px">Back to Login</a>
+			<?php elseif ($demo): ?>
 			<form method="POST" class="auth-form">
 				<input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
 				<div class="form-group">
@@ -58,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			<?php else: ?>
 			<p class="oauth-note">Google OAuth is disabled. Please configure client_id and client_secret in config/oauth.php.</p>
 			<?php endif; ?>
-			<a href="login.php?redirect=<?= urlencode($redirect) ?>" class="auth-link-btn" style="margin-top:14px">Back to Login</a>
+			<?php if (!$useRealOauth && $demo): ?><a href="login.php?redirect=<?= urlencode($redirect) ?>" class="auth-link-btn" style="margin-top:14px">Back to Login</a><?php endif; ?>
 		</div>
 	</div>
 </body>
