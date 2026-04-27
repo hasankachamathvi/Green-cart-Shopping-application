@@ -5,6 +5,11 @@ ensureAuthSchema($conn);
 $oauth = include(__DIR__ . '/../config/oauth.php');
 $demo = (bool)($oauth['demo_mode'] ?? true);
 $error = '';
+$redirect = safeRedirectTarget($_POST['redirect'] ?? ($_GET['redirect'] ?? '../pages/products.php'));
+
+if ($redirect !== '../pages/products.php') {
+		$_SESSION['redirect_url'] = $redirect;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$name = trim($_POST['name'] ?? 'Facebook User');
@@ -15,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		} else {
 				$user = loginOrCreateSocialUser($conn, $name, $email, 'facebook');
 				if ($user) {
-						completeLogin($user);
+						completeLogin($user, $redirect);
 				}
 				$error = 'Unable to login right now. Please try again.';
 		}
@@ -38,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			<?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
 			<?php if ($demo): ?>
 			<form method="POST" class="auth-form">
+				<input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
 				<div class="form-group">
 					<label>Name</label>
 					<input type="text" name="name" value="Facebook User" required>
@@ -52,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			<?php else: ?>
 			<p class="oauth-note">Facebook OAuth is disabled. Please configure app_id and app_secret in config/oauth.php.</p>
 			<?php endif; ?>
-			<a href="login.php" class="auth-link-btn" style="margin-top:14px">Back to Login</a>
+			<a href="login.php?redirect=<?= urlencode($redirect) ?>" class="auth-link-btn" style="margin-top:14px">Back to Login</a>
 		</div>
 	</div>
 </body>

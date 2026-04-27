@@ -70,9 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="auth-divider"><span>or</span></div>
 
     <div class="social-login-stack">
-      <a href="google-login.php" class="social-btn google-btn">Continue with Google</a>
-      <a href="facebook-login.php" class="social-btn facebook-btn">Continue with Facebook</a>
-      <a href="passkey-auth.php" class="social-btn passkey-btn">Continue with Passkey</a>
+      <a href="google-login.php?redirect=<?= urlencode($redirect) ?>" class="social-btn google-btn">Continue with Google</a>
+      <a href="facebook-login.php?redirect=<?= urlencode($redirect) ?>" class="social-btn facebook-btn">Continue with Facebook</a>
+      <a href="passkey-auth.php?redirect=<?= urlencode($redirect) ?>" class="social-btn passkey-btn">Continue with Passkey</a>
     </div>
 
     <div class="auth-divider"><span>new here?</span></div>

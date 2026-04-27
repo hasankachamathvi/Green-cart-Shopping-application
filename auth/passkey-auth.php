@@ -4,6 +4,11 @@ ensureAuthSchema($conn);
 
 $error = '';
 $mode = $_POST['mode'] ?? 'login';
+$redirect = safeRedirectTarget($_POST['redirect'] ?? ($_GET['redirect'] ?? '../pages/products.php'));
+
+if ($redirect !== '../pages/products.php') {
+		$_SESSION['redirect_url'] = $redirect;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$name = trim($_POST['name'] ?? 'Passkey User');
@@ -20,24 +25,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						$existing = $existsStmt->get_result()->fetch_assoc();
 
 						if ($existing) {
-								$error = 'User already exists. Use passkey login instead.';
+								$uid = (int)$existing['user_id'];
+								$up = $conn->prepare("UPDATE users SET login_type = 'passkey', passkey_id = ?, name = ? WHERE user_id = ?");
+								$up->bind_param('ssi', $passkey_id, $name, $uid);
+								if ($up->execute()) {
+										$conn->query("INSERT IGNORE INTO carts (user_id) VALUES ($uid)");
+										completeLogin(['user_id' => $uid, 'name' => ($name ?: $existing['name'])], $redirect);
+								} else {
+										$error = 'Unable to update existing user for passkey login.';
+								}
 						} else {
 								$stmt = $conn->prepare("INSERT INTO users (name, email, password, login_type, passkey_id) VALUES (?, ?, NULL, 'passkey', ?)");
 								$stmt->bind_param('sss', $name, $email, $passkey_id);
 								if ($stmt->execute()) {
 										$uid = (int)$conn->insert_id;
 										$conn->query("INSERT IGNORE INTO carts (user_id) VALUES ($uid)");
-										completeLogin(['user_id' => $uid, 'name' => $name]);
+										completeLogin(['user_id' => $uid, 'name' => $name], $redirect);
+								} else {
+										$error = 'Unable to register passkey user.';
 								}
 						}
 				} else {
-						$stmt = $conn->prepare("SELECT user_id, name FROM users WHERE email = ? AND login_type = 'passkey' LIMIT 1");
+						$stmt = $conn->prepare("SELECT user_id, name, passkey_id FROM users WHERE email = ? AND login_type = 'passkey' LIMIT 1");
 						$stmt->bind_param('s', $email);
 						$stmt->execute();
 						$user = $stmt->get_result()->fetch_assoc();
 
 						if ($user) {
-								completeLogin($user);
+								if (!empty($user['passkey_id']) && $passkey_id !== '' && $user['passkey_id'] !== $passkey_id) {
+										$error = 'Passkey identifier does not match this account.';
+								} else {
+										completeLogin($user, $redirect);
+								}
 						}
 						$error = 'No passkey user found. Register first.';
 				}
@@ -61,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			<?php if ($error): ?><div class="auth-error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
 
 			<form method="POST" class="auth-form">
+				<input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
 				<div class="form-group">
 					<label>Email</label>
 					<input type="email" name="email" required>
@@ -80,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			</form>
 
 			<p class="oauth-note">For production, replace with full WebAuthn challenge/verification.</p>
-			<a href="login.php" class="auth-link-btn" style="margin-top:14px">Back to Login</a>
+			<a href="login.php?redirect=<?= urlencode($redirect) ?>" class="auth-link-btn" style="margin-top:14px">Back to Login</a>
 		</div>
 	</div>
 </body>

@@ -5,6 +5,24 @@ requireAdmin();
 
 $edit_id = (int)($_GET['id'] ?? 0);
 
+function resolveProductImagePath(?string $image_url): string {
+		$image_url = trim((string)$image_url);
+		if ($image_url === '') {
+				return '../assets/images/default-product.svg';
+		}
+
+		if (preg_match('/^https?:\/\//i', $image_url)) {
+				return $image_url;
+		}
+
+		$fullPath = __DIR__ . '/../assets/images/' . $image_url;
+		if (is_file($fullPath)) {
+				return '../assets/images/' . $image_url;
+		}
+
+		return '../assets/images/default-product.svg';
+}
+
 function handleProductImageUpload(array $file): array {
 		if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) {
 				return [true, ''];
@@ -49,10 +67,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_product'])) {
 		$price = (float)($_POST['price'] ?? 0);
 		$image_url = trim($_POST['image_url'] ?? '');
 		$category_id = (int)($_POST['category_id'] ?? 0);
+		$redirectBase = 'edit-product.php?id=' . $id;
+
+		if ($id <= 0) {
+			header('Location: edit-product.php?error=' . urlencode('Invalid product ID.'));
+			exit;
+		}
+
+		if ($name === '' || $price <= 0 || $category_id <= 0) {
+			header('Location: ' . $redirectBase . '&error=' . urlencode('Name, valid price, and category are required.'));
+			exit;
+		}
+
+		$checkStmt = $conn->prepare('SELECT product_id FROM products WHERE product_id = ? LIMIT 1');
+		$checkStmt->bind_param('i', $id);
+		$checkStmt->execute();
+		if (!$checkStmt->get_result()->fetch_assoc()) {
+			header('Location: edit-product.php?error=' . urlencode('Product not found.'));
+			exit;
+		}
+
 		[$uploadOk, $uploadedFilename] = handleProductImageUpload($_FILES['image_file'] ?? []);
 
 		if (!$uploadOk) {
-				header('Location: edit-product.php?id=' . $id . '&error=' . urlencode($uploadedFilename));
+				header('Location: ' . $redirectBase . '&error=' . urlencode($uploadedFilename));
 				exit;
 		}
 
@@ -63,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_product'])) {
 		$stmt = $conn->prepare('UPDATE products SET name = ?, description = ?, price = ?, image_url = ?, category_id = ? WHERE product_id = ?');
 		$stmt->bind_param('ssdsii', $name, $description, $price, $image_url, $category_id, $id);
 		$stmt->execute();
-		header('Location: edit-product.php?id=' . $id);
+		header('Location: ' . $redirectBase . '&success=' . urlencode('Product updated successfully.'));
 		exit;
 }
 
@@ -125,6 +163,9 @@ if ($edit_id > 0) {
 	<?php if ($selected): ?>
 	<section class="admin-form-card" style="margin-top:16px">
 		<h2>Edit Product #<?= (int)$selected['product_id'] ?></h2>
+		<?php if (!empty($_GET['success'])): ?>
+			<div class="contact-success"><?= htmlspecialchars($_GET['success']) ?></div>
+		<?php endif; ?>
 		<?php if (!empty($_GET['error'])): ?>
 			<div class="contact-success" style="background:#fdecec;color:#9f1f1f"><?= htmlspecialchars($_GET['error']) ?></div>
 		<?php endif; ?>
@@ -132,8 +173,17 @@ if ($edit_id > 0) {
 			<input type="hidden" name="update_product" value="1">
 			<input type="hidden" name="product_id" value="<?= (int)$selected['product_id'] ?>">
 			<div class="form-group"><label>Name</label><input type="text" name="name" value="<?= htmlspecialchars($selected['name']) ?>" required></div>
-			<div class="form-group"><label>Description</label><input type="text" name="description" value="<?= htmlspecialchars($selected['description']) ?>" required></div>
+			<div class="form-group">
+				<label>Description</label>
+				<textarea name="description" rows="4" required><?= htmlspecialchars($selected['description']) ?></textarea>
+			</div>
 			<div class="form-group"><label>Price</label><input type="number" step="0.01" name="price" value="<?= htmlspecialchars($selected['price']) ?>" required></div>
+			<div class="form-group">
+				<label>Current Image</label>
+				<div style="margin-top:8px">
+					<img src="<?= htmlspecialchars(resolveProductImagePath($selected['image_url'])) ?>" alt="<?= htmlspecialchars($selected['name']) ?>" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid #d7dfd3;">
+				</div>
+			</div>
 			<div class="form-group"><label>Upload New Image</label><input type="file" name="image_file" accept="image/*"></div>
 			<div class="form-group"><label>Image URL</label><input type="text" name="image_url" value="<?= htmlspecialchars($selected['image_url']) ?>"></div>
 			<div class="form-group">
@@ -146,6 +196,11 @@ if ($edit_id > 0) {
 			</div>
 			<button type="submit" class="checkout-btn">Update Product</button>
 		</form>
+	</section>
+	<?php else: ?>
+	<section class="admin-form-card" style="margin-top:16px">
+		<h2>Product Details Edit</h2>
+		<p>Select a product from the table above to edit its details.</p>
 	</section>
 	<?php endif; ?>
 </main>

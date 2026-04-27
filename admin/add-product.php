@@ -86,6 +86,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $categories = $conn->query('SELECT category_id, category_name FROM categories ORDER BY category_name ASC');
+$products = $conn->query('SELECT p.product_id, p.name, p.price, c.category_name
+								FROM products p
+								LEFT JOIN categories c ON p.category_id = c.category_id
+								ORDER BY p.product_id DESC');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,6 +140,27 @@ $categories = $conn->query('SELECT category_id, category_name FROM categories OR
 	<div style="margin-top:18px">
 		<a href="edit-product.php" class="hero-ghost">Manage Existing Products</a>
 	</div>
+
+	<section class="admin-table-card" style="margin-top:20px">
+		<h2>Existing Products</h2>
+		<div class="admin-table-wrap">
+			<table class="admin-table">
+				<tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr>
+				<?php while ($p = $products->fetch_assoc()): ?>
+					<tr>
+						<td><?= (int)$p['product_id'] ?></td>
+						<td><?= htmlspecialchars($p['name']) ?></td>
+						<td><?= htmlspecialchars($p['category_name'] ?: 'Uncategorized') ?></td>
+						<td>Rs. <?= number_format((float)$p['price'], 2) ?></td>
+						<td>
+							<a class="table-action" href="edit-product.php?id=<?= (int)$p['product_id'] ?>">Edit / Update</a>
+							<a class="table-action danger" href="delete-product.php?id=<?= (int)$p['product_id'] ?>" onclick="return confirm('Delete this product?')">Delete</a>
+						</td>
+					</tr>
+				<?php endwhile; ?>
+			</table>
+		</div>
+	</section>
 </main>
 </body>
 </html>

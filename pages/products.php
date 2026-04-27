@@ -3,6 +3,7 @@ session_start();
 include("../config/db.php");
 $is_logged_in = isset($_SESSION['user_id']);
 $login_url = '../auth/login.php?redirect=' . urlencode('../pages/products.php');
+$selected_category_id = isset($_GET['category']) ? (int)$_GET['category'] : 0;
 
 function productImagePath($image_url) {
   if (!$image_url) return "../assets/images/default-product.svg";
@@ -10,18 +11,46 @@ function productImagePath($image_url) {
   return "../assets/images/" . $image_url;
 }
 
-// Fetch categories
-$cats_result = $conn->query("SELECT * FROM categories");
+// Fetch categories with product counts
+$cats_result = $conn->query("SELECT c.category_id, c.category_name, COUNT(p.product_id) AS product_count
+                            FROM categories c
+                            LEFT JOIN products p ON p.category_id = c.category_id
+                            GROUP BY c.category_id, c.category_name
+                            ORDER BY c.category_name ASC");
 $categories = [];
 while ($row = $cats_result->fetch_assoc()) $categories[] = $row;
 
-// Fetch products
-$prods_result = $conn->query("SELECT p.*, c.category_name FROM products p LEFT JOIN categories c ON p.category_id = c.category_id");
-if (!$prods_result) {
-  die("Products query failed: " . $conn->error);
+// Fetch products, optionally filtered by category
+if ($selected_category_id > 0) {
+  $stmt = $conn->prepare("SELECT p.*, c.category_name
+                         FROM products p
+                         LEFT JOIN categories c ON p.category_id = c.category_id
+                         WHERE p.category_id = ?
+                         ORDER BY p.name ASC");
+  $stmt->bind_param("i", $selected_category_id);
+  $stmt->execute();
+  $prods_result = $stmt->get_result();
+} else {
+  $prods_result = $conn->query("SELECT p.*, c.category_name
+                               FROM products p
+                               LEFT JOIN categories c ON p.category_id = c.category_id
+                               ORDER BY c.category_name ASC, p.name ASC");
 }
+
+if (!$prods_result) die("Products query failed: " . $conn->error);
+
 $products = [];
 while ($row = $prods_result->fetch_assoc()) $products[] = $row;
+
+$selected_category_name = 'All Categories';
+if ($selected_category_id > 0) {
+  foreach ($categories as $cat) {
+    if ((int)$cat['category_id'] === $selected_category_id) {
+      $selected_category_name = $cat['category_name'];
+      break;
+    }
+  }
+}
 
 // Get cart items for this user
 $cart_items = [];
@@ -92,16 +121,24 @@ if ($is_logged_in) {
 <div class="section">
   <p class="section-title">Shop by Category</p>
   <div class="cats" id="catChips">
-    <button class="cat-chip active" onclick="setCategory('all', this)">All</button>
+    <a class="cat-chip<?= $selected_category_id === 0 ? ' active' : '' ?>" href="products.php">All</a>
     <?php foreach ($categories as $cat): ?>
-      <button class="cat-chip" onclick="setCategory('<?= $cat['category_id'] ?>', this)"><?= htmlspecialchars($cat['category_name']) ?></button>
+      <a class="cat-chip<?= $selected_category_id === (int)$cat['category_id'] ? ' active' : '' ?>" href="products.php?category=<?= (int)$cat['category_id'] ?>"><?= htmlspecialchars($cat['category_name']) ?> (<?= (int)$cat['product_count'] ?>)</a>
     <?php endforeach; ?>
   </div>
 </div>
 
 <!-- PRODUCTS -->
 <div class="products-section">
+  <div style="max-width:1200px;margin:0 auto 14px auto;padding:0 16px;color:#365238;font-weight:600;">
+    Showing: <?= htmlspecialchars($selected_category_name) ?> (<?= count($products) ?> products)
+  </div>
   <div class="products-grid" id="productsGrid">
+    <?php if (empty($products)): ?>
+      <div style="grid-column:1/-1;background:#fff;border:1px solid #e3e7df;border-radius:14px;padding:28px;text-align:center;color:#5e6f59;">
+        No products found in this category.
+      </div>
+    <?php endif; ?>
     <?php foreach ($products as $p):
       $qty = $cart_items[$p['product_id']] ?? 0;
       $emoji = getEmoji($p['name']);

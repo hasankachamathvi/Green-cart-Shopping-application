@@ -5,6 +5,25 @@ if (session_status() === PHP_SESSION_NONE) {
 
 include(__DIR__ . '/../config/db.php');
 
+function safeRedirectTarget(?string $target): string {
+    $fallback = '../pages/products.php';
+    $target = trim((string)$target);
+
+    if ($target === '') {
+        return $fallback;
+    }
+
+    if (preg_match('/^https?:\/\//i', $target)) {
+        return $fallback;
+    }
+
+    if ($target[0] === '/') {
+        return $fallback;
+    }
+
+    return $target;
+}
+
 function ensureAuthSchema(mysqli $conn): void {
     $cols = [];
     $rs = $conn->query("SHOW COLUMNS FROM users");
@@ -51,9 +70,15 @@ function loginOrCreateSocialUser(mysqli $conn, string $name, string $email, stri
     ];
 }
 
-function completeLogin(array $user): void {
+function completeLogin(array $user, ?string $redirect = null): void {
     $_SESSION['user_id'] = (int)$user['user_id'];
     $_SESSION['user_name'] = $user['name'];
-    header('Location: ../pages/products.php');
+    $sessionRedirect = $_SESSION['redirect_url'] ?? null;
+    if (isset($_SESSION['redirect_url'])) {
+        unset($_SESSION['redirect_url']);
+    }
+
+    $target = safeRedirectTarget($redirect ?: $sessionRedirect);
+    header('Location: ' . $target);
     exit;
 }
