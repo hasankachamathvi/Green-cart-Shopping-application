@@ -7,10 +7,10 @@ USE shopping_cart_db;
 -- 1. INSERT SAMPLE USERS
 -- =========================
 INSERT INTO users (name, email, password, login_type, created_at) VALUES
-('Test Admin', 'admin@greencart.com', '$2y$10$fakehashedpass123456789abcdefghijk', 'manual', NOW()),
-('John Doe', 'john@example.com', '$2y$10$fakehashedpass123456789abcdefghijk', 'manual', NOW()),
-('Jane Smith', 'jane@example.com', '$2y$10$fakehashedpass123456789abcdefghijk', 'manual', NOW()),
-('Ahmed Ali', 'ahmed@example.com', '$2y$10$fakehashedpass123456789abcdefghijk', 'google', NOW());
+('Test Admin', 'admin@greencart.com', '$2y$10$yFP9zhXF2pQtyJgtndVyTOraAGBoINoqjsKa3q7x.y3blVNa6ZxMa', 'manual', NOW()),
+('John Doe', 'john@example.com', '$2y$10$yFP9zhXF2pQtyJgtndVyTOraAGBoINoqjsKa3q7x.y3blVNa6ZxMa', 'manual', NOW()),
+('Jane Smith', 'jane@example.com', '$2y$10$yFP9zhXF2pQtyJgtndVyTOraAGBoINoqjsKa3q7x.y3blVNa6ZxMa', 'manual', NOW()),
+('Ahmed Ali', 'ahmed@example.com', '$2y$10$yFP9zhXF2pQtyJgtndVyTOraAGBoINoqjsKa3q7x.y3blVNa6ZxMa', 'google', NOW());
 
 -- =========================
 -- 2. INSERT SAMPLE CATEGORIES
