@@ -90,12 +90,15 @@ if ($edit_id > 0) {
 </head>
 <body class="admin-page">
 <nav class="admin-sidebar">
-	<a class="nav-logo" href="dashboard.php"><span>🧩</span> Admin</a>
+	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
 	<div class="nav-right">
 		<a href="dashboard.php" class="back-btn">Dashboard</a>
-		<a href="add-product.php" class="back-btn">Manage Product</a>
 		<a href="manage-orders.php" class="back-btn">Orders</a>
+		<a href="manage-payments.php" class="back-btn">Payments</a>
 		<a href="manage-feedback.php" class="back-btn">Feedback</a>
+		<a href="add-product.php" class="back-btn">Manage Product</a>
+		<a href="manage-category.php" class="back-btn">Categories</a>
+		<a href="dashboard.php?logout=1" class="logout-btn">Log Out</a>
 	</div>
 </nav>
 
