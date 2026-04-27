@@ -6,15 +6,39 @@ requireAdmin();
 $message = '';
 $edit_id = (int)($_GET['edit'] ?? 0);
 
+function getFirstAvailableCategoryId(mysqli $conn): int {
+		$result = $conn->query('SELECT category_id FROM categories ORDER BY category_id ASC');
+		$nextId = 1;
+		while ($row = $result->fetch_assoc()) {
+				$currentId = (int)$row['category_id'];
+				if ($currentId === $nextId) {
+						$nextId++;
+				} elseif ($currentId > $nextId) {
+						break;
+				}
+		}
+		return $nextId;
+}
+
+function redirectWithMessage(string $msg): void {
+		header('Location: manage-category.php?msg=' . urlencode($msg));
+		exit;
+}
+
+if (isset($_GET['msg'])) {
+		$message = trim((string)$_GET['msg']);
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_category'])) {
 		$category_name = trim($_POST['category_name'] ?? '');
 		if ($category_name !== '') {
-				$stmt = $conn->prepare('INSERT INTO categories (category_name) VALUES (?)');
-				$stmt->bind_param('s', $category_name);
+				$nextId = getFirstAvailableCategoryId($conn);
+				$stmt = $conn->prepare('INSERT INTO categories (category_id, category_name) VALUES (?, ?)');
+				$stmt->bind_param('is', $nextId, $category_name);
 				$stmt->execute();
-				$message = 'Category added successfully.';
+				redirectWithMessage('Category added successfully.');
 		} else {
-				$message = 'Category name cannot be empty.';
+				redirectWithMessage('Category name cannot be empty.');
 		}
 }
 
@@ -26,32 +50,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_category'])) {
 				$stmt = $conn->prepare('UPDATE categories SET category_name = ? WHERE category_id = ?');
 				$stmt->bind_param('si', $category_name, $id);
 				$stmt->execute();
-				$message = 'Category updated successfully.';
-				$edit_id = 0;
+				redirectWithMessage('Category updated successfully.');
 		} else {
-				$message = 'Invalid category data.';
+				redirectWithMessage('Invalid category data.');
 		}
 }
 
-if (isset($_GET['delete'])) {
-		$id = (int)$_GET['delete'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_category'])) {
+		$id = (int)($_POST['category_id'] ?? 0);
 		$stmt = $conn->prepare('DELETE FROM categories WHERE category_id = ?');
 		$stmt->bind_param('i', $id);
 		$stmt->execute();
-		
-		// Reset auto-increment to start from 1 if no categories exist
-		$countResult = $conn->query('SELECT COUNT(*) as cnt FROM categories');
-		$countRow = $countResult->fetch_assoc();
-		if ((int)$countRow['cnt'] === 0) {
-				$conn->query('ALTER TABLE categories AUTO_INCREMENT = 1');
-		}
-		
-		$message = 'Category deleted successfully.';
+		redirectWithMessage('Category deleted successfully.');
 }
 
-if (isset($_GET['reset_auto_increment'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_auto_increment'])) {
 		$conn->query('ALTER TABLE categories AUTO_INCREMENT = 1');
-		$message = 'Auto-increment reset to 1.';
+		redirectWithMessage('Auto-increment reset to 1.');
 }
 
 $categories = $conn->query('SELECT category_id, category_name FROM categories ORDER BY category_id ASC');
@@ -95,7 +110,10 @@ if ($edit_id > 0) {
 	</form>
 
 	<div style="margin-top:12px;margin-bottom:18px">
-		<a href="manage-category.php?reset_auto_increment=1" class="hero-ghost" style="display:inline-block;padding:8px 14px;font-size:12px" onclick="return confirm('Reset category IDs to start from 1? This is useful after deleting all categories.')">Reset Auto-Increment to 1</a>
+		<form method="POST" style="display:inline">
+			<input type="hidden" name="reset_auto_increment" value="1">
+			<button type="submit" class="hero-ghost" style="display:inline-block;padding:8px 14px;font-size:12px;border:0;cursor:pointer" formnovalidate onclick="return confirm('Reset category IDs to start from 1?')">Reset Auto-Increment to 1</button>
+		</form>
 	</div>
 
 	<div class="admin-table-wrap" style="margin-top:18px">
@@ -110,7 +128,11 @@ if ($edit_id > 0) {
 				<td><?= htmlspecialchars($cat['category_name']) ?></td>
 				<td>
 					<a class="table-action" href="manage-category.php?edit=<?= (int)$cat['category_id'] ?>">Edit</a>
-					<a class="table-action danger" href="manage-category.php?delete=<?= (int)$cat['category_id'] ?>" onclick="return confirm('Delete this category? Products in this category will be uncategorized.')">Delete</a>
+					<form method="POST" style="display:inline;margin:0">
+						<input type="hidden" name="delete_category" value="1">
+						<input type="hidden" name="category_id" value="<?= (int)$cat['category_id'] ?>">
+						<button type="submit" class="table-action danger" formnovalidate onclick="return confirm('Delete this category? Products in this category will be uncategorized.')">Delete</button>
+					</form>
 				</td>
 			</tr>
 			<?php endwhile; ?>
