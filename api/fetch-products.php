@@ -1,5 +1,11 @@
 <?php
 include("../config/db.php");
+
+function productImagePath($image_url) {
+	if (!$image_url) return '';
+	if (preg_match('/^https?:\/\//i', $image_url)) return $image_url;
+	return "../assets/images/" . $image_url;
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,10 +22,13 @@ $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
 
 while($row = $result->fetch_assoc()) {
+	$img = productImagePath($row['image_url']);
 ?>
 
 <div style="border:1px solid #000; padding:10px; margin:10px;">
-	<img src="../assets/images/<?php echo $row['image_url']; ?>" width="100"><br>
+	<?php if ($img): ?>
+		<img src="<?php echo htmlspecialchars($img); ?>" width="100" alt="<?php echo htmlspecialchars($row['name']); ?>"><br>
+	<?php endif; ?>
 	<b><?php echo $row['name']; ?></b><br>
 	Price: Rs. <?php echo $row['price']; ?><br>
 

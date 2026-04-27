@@ -47,7 +47,8 @@ $img = productImagePath($product['image_url']);
 <main class="product-details-wrap">
 	<section class="product-details-image-card">
 		<?php if ($img): ?>
-			<img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="details-main-image">
+			<img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="details-main-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+			<div class="details-image-fallback" style="display:none">Fresh Product</div>
 		<?php else: ?>
 			<div class="details-image-fallback">Fresh Product</div>
 		<?php endif; ?>
