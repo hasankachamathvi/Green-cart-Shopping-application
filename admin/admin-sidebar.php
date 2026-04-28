@@ -34,6 +34,8 @@ if (!isset($_SESSION['admin_id'])) {
         min-height: 100vh;
         background: #f5f5f5;
         font-family: 'DM Sans', sans-serif;
+        margin-left: 0 !important;
+        width: 100% !important;
     }
 
     .admin-main,
@@ -44,6 +46,22 @@ if (!isset($_SESSION['admin_id'])) {
         padding: 30px;
         background: #f5f5f5;
         box-sizing: border-box;
+    }
+
+    body.admin-page > .admin-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    body.admin-page > .admin-wrapper > .admin-sidebar-nav {
+        flex: 0 0 250px;
+    }
+
+    body.admin-page > .admin-wrapper > .admin-main,
+    body.admin-page > .admin-wrapper > .admin-wrap,
+    body.admin-page > .admin-wrapper > .admin-form-wrap,
+    body.admin-page > .admin-wrapper > .admin-edit-wrap {
+        min-width: 0;
     }
     
     .admin-sidebar-nav {
