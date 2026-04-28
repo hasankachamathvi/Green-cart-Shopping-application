@@ -9,11 +9,14 @@ unset($_SESSION['payment_method']);
 unset($_SESSION['payment_status']);
 
 function paymentLabel($method) {
-  return match ($method) {
-    'card' => 'Card',
-    'bank_transfer' => 'Bank Transfer',
-    default => 'Cash on Delivery',
-  };
+  switch ($method) {
+    case 'card':
+      return 'Card';
+    case 'bank_transfer':
+      return 'Bank Transfer';
+    default:
+      return 'Cash on Delivery';
+  }
 }
 ?>
 <!DOCTYPE html>

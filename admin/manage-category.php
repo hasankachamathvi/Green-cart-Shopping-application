@@ -86,77 +86,66 @@ if ($edit_id > 0) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Manage Categories - Admin</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260430">
-	<link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
-<nav class="admin-sidebar">
-	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
-	<div class="nav-right">
-		<a href="dashboard.php" class="back-btn">Dashboard</a>
-		<a href="manage-orders.php" class="back-btn">Orders</a>
-		<a href="manage-payments.php" class="back-btn">Payments</a>
-		<a href="manage-feedback.php" class="back-btn">Feedback</a>
-		<a href="add-product.php" class="back-btn">Manage Product</a>
-		<a href="manage-category.php" class="back-btn">Categories</a>
-		<a href="dashboard.php?logout=1" class="logout-btn">Log Out</a>
-	</div>
-</nav>
-
-<main class="admin-form-wrap">
-	<h1>Manage Categories</h1>
-	<?php if ($message): ?><div class="contact-success"><?= htmlspecialchars($message) ?></div><?php endif; ?>
-	
-	<form method="POST" class="admin-inline-form">
-		<input type="hidden" name="new_category" value="1">
-		<input type="text" name="category_name" placeholder="New category name" required>
-		<button type="submit" class="checkout-btn" style="width:auto;padding:10px 16px">Add Category</button>
-	</form>
-
-	<div style="margin-top:12px;margin-bottom:18px">
-		<form method="POST" style="display:inline">
-			<input type="hidden" name="reset_auto_increment" value="1">
-			<button type="submit" class="hero-ghost" style="display:inline-block;padding:8px 14px;font-size:12px;border:0;cursor:pointer" formnovalidate onclick="return confirm('Reset category IDs to start from 1?')">Reset Auto-Increment to 1</button>
+<div class="admin-wrapper">
+	<?php include(__DIR__ . '/admin-sidebar.php'); ?>
+	<main class="admin-form-wrap">
+		<h1>Manage Categories</h1>
+		<?php if ($message): ?><div class="contact-success"><?= htmlspecialchars($message) ?></div><?php endif; ?>
+		
+		<form method="POST" class="admin-inline-form">
+			<input type="hidden" name="new_category" value="1">
+			<input type="text" name="category_name" placeholder="New category name" required>
+			<button type="submit" class="checkout-btn" style="width:auto;padding:10px 16px">Add Category</button>
 		</form>
-	</div>
 
-	<div class="admin-table-wrap" style="margin-top:18px">
-		<table class="admin-table">
-			<tr><th>ID</th><th>Name</th><th>Actions</th></tr>
-			<?php 
-			$categories->data_seek(0);
-			while ($cat = $categories->fetch_assoc()): 
-			?>
-			<tr>
-				<td><?= (int)$cat['category_id'] ?></td>
-				<td><?= htmlspecialchars($cat['category_name']) ?></td>
-				<td>
-					<a class="table-action" href="manage-category.php?edit=<?= (int)$cat['category_id'] ?>">Edit</a>
-					<form method="POST" style="display:inline;margin:0">
-						<input type="hidden" name="delete_category" value="1">
-						<input type="hidden" name="category_id" value="<?= (int)$cat['category_id'] ?>">
-						<button type="submit" class="table-action danger" formnovalidate onclick="return confirm('Delete this category? Products in this category will be uncategorized.')">Delete</button>
-					</form>
-				</td>
-			</tr>
-			<?php endwhile; ?>
-		</table>
-	</div>
+		<div style="margin-top:12px;margin-bottom:18px">
+			<form method="POST" style="display:inline">
+				<input type="hidden" name="reset_auto_increment" value="1">
+				<button type="submit" class="hero-ghost" style="display:inline-block;padding:8px 14px;font-size:12px;border:0;cursor:pointer" formnovalidate onclick="return confirm('Reset category IDs to start from 1?')">Reset Auto-Increment to 1</button>
+			</form>
+		</div>
 
-	<?php if ($selected): ?>
-	<section class="admin-form-card" style="margin-top:24px">
-		<h2>Edit Category #<?= (int)$selected['category_id'] ?></h2>
-		<form method="POST">
-			<input type="hidden" name="update_category" value="1">
-			<input type="hidden" name="category_id" value="<?= (int)$selected['category_id'] ?>">
-			<div class="form-group">
-				<label>Category Name</label>
-				<input type="text" name="category_name" value="<?= htmlspecialchars($selected['category_name']) ?>" required>
-			</div>
-			<button type="submit" class="checkout-btn">Update Category</button>
-		</form>
-		<a href="manage-category.php" class="hero-ghost" style="display:inline-block;margin-top:10px">Cancel</a>
-	</section>
-	<?php endif; ?>
-</main>
+		<div class="admin-table-wrap" style="margin-top:18px">
+			<table class="admin-table">
+				<tr><th>ID</th><th>Name</th><th>Actions</th></tr>
+				<?php 
+				$categories->data_seek(0);
+				while ($cat = $categories->fetch_assoc()): 
+				?>
+				<tr>
+					<td><?= (int)$cat['category_id'] ?></td>
+					<td><?= htmlspecialchars($cat['category_name']) ?></td>
+					<td>
+						<a class="table-action" href="manage-category.php?edit=<?= (int)$cat['category_id'] ?>">Edit</a>
+						<form method="POST" style="display:inline;margin:0">
+							<input type="hidden" name="delete_category" value="1">
+							<input type="hidden" name="category_id" value="<?= (int)$cat['category_id'] ?>">
+							<button type="submit" class="table-action danger" formnovalidate onclick="return confirm('Delete this category? Products in this category will be uncategorized.')">Delete</button>
+						</form>
+					</td>
+				</tr>
+				<?php endwhile; ?>
+			</table>
+		</div>
+
+		<?php if ($selected): ?>
+		<section class="admin-form-card" style="margin-top:24px">
+			<h2>Edit Category #<?= (int)$selected['category_id'] ?></h2>
+			<form method="POST">
+				<input type="hidden" name="update_category" value="1">
+				<input type="hidden" name="category_id" value="<?= (int)$selected['category_id'] ?>">
+				<div class="form-group">
+					<label>Category Name</label>
+					<input type="text" name="category_name" value="<?= htmlspecialchars($selected['category_name']) ?>" required>
+				</div>
+				<button type="submit" class="checkout-btn">Update Category</button>
+			</form>
+			<a href="manage-category.php" class="hero-ghost" style="display:inline-block;margin-top:10px">Cancel</a>
+		</section>
+		<?php endif; ?>
+	</main>
+</div>
 </body>
 </html>

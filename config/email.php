@@ -1,17 +1,15 @@
 <?php
 // Email Configuration and Helper Functions
 
-return [
-    // Email sender configuration
-    'from_email' => 'noreply@greencart.local',
+// Email sender configuration
+$config = [
+    'from_email' => 'admin@greencart',
     'from_name' => 'GreenCart',
-    
     // For production, use actual SMTP settings
     // 'smtp_host' => 'smtp.mailtrap.io',
     // 'smtp_port' => 587,
     // 'smtp_user' => 'your_user',
     // 'smtp_pass' => 'your_pass',
-    
     // For localhost/development, we'll use PHP's mail() function
     'use_mail_function' => true,
 ];
@@ -28,8 +26,7 @@ return [
  * @return bool Success status
  */
 function sendOrderConfirmationEmail($conn, $order_id, $user_email, $user_name, $items, $total) {
-    $config = include(__DIR__ . '/email.php');
-    
+    global $config;
     if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
         return false;
     }
@@ -108,7 +105,7 @@ function sendOrderConfirmationEmail($conn, $order_id, $user_email, $user_name, $
                 <a href='http://localhost/Shopping-cart-application/pages/order-history.php' class='button'>View Order Status</a>
                 
                 <p style=\"margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;\">
-                    If you have any questions, please contact our support team at support@greencart.local
+                    If you have any questions, please contact our support team at admin@greencart
                 </p>
             </div>
             
@@ -124,7 +121,7 @@ function sendOrderConfirmationEmail($conn, $order_id, $user_email, $user_name, $
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $headers .= "From: {$config['from_name']} <{$config['from_email']}>\r\n";
-    $headers .= "Reply-To: support@greencart.local\r\n";
+    $headers .= "Reply-To: admin@greencart\r\n";
     
     return mail($user_email, $subject, $htmlBody, $headers);
 }
@@ -133,7 +130,7 @@ function sendOrderConfirmationEmail($conn, $order_id, $user_email, $user_name, $
  * Send order status update email
  */
 function sendOrderStatusUpdateEmail($user_email, $user_name, $order_id, $status) {
-    $config = include(__DIR__ . '/email.php');
+    global $config;
     
     $statusMessages = [
         'pending' => 'Your order is being prepared',
@@ -197,8 +194,7 @@ function sendOrderStatusUpdateEmail($user_email, $user_name, $order_id, $status)
  * Send welcome/registration confirmation email
  */
 function sendWelcomeEmail($user_email, $user_name) {
-    $config = include(__DIR__ . '/email.php');
-    
+    global $config;
     if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
         return false;
     }
@@ -258,7 +254,7 @@ function sendWelcomeEmail($user_email, $user_name) {
                 <a href='http://localhost/Shopping-cart-application/pages/profile.php' class='button'>View Profile</a>
                 
                 <h3>Questions?</h3>
-                <p>If you need any help, feel free to reach out to our support team at <strong>support@greencart.local</strong></p>
+                <p>If you need any help, feel free to reach out to our support team at <strong>admin@greencart</strong></p>
                 
                 <p style=\"margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;\">
                     Happy shopping with GreenCart!<br>
@@ -278,7 +274,7 @@ function sendWelcomeEmail($user_email, $user_name) {
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-type: text/html; charset=UTF-8\r\n";
     $headers .= "From: {$config['from_name']} <{$config['from_email']}>\r\n";
-    $headers .= "Reply-To: support@greencart.local\r\n";
+    $headers .= "Reply-To: admin@greencart\r\n";
     
     return mail($user_email, $subject, $htmlBody, $headers);
 }

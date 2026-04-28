@@ -123,86 +123,75 @@ if ($edit_id > 0) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Edit Products - Admin</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260430">
-	<link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
-<nav class="admin-sidebar">
-	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
-	<div class="nav-right">
-		<a href="dashboard.php" class="back-btn">Dashboard</a>
-		<a href="manage-orders.php" class="back-btn">Orders</a>
-		<a href="manage-payments.php" class="back-btn">Payments</a>
-		<a href="manage-feedback.php" class="back-btn">Feedback</a>
-		<a href="add-product.php" class="back-btn">Manage Product</a>
-		<a href="manage-category.php" class="back-btn">Categories</a>
-		<a href="dashboard.php?logout=1" class="logout-btn">Log Out</a>
-	</div>
-</nav>
-
-<main class="admin-edit-wrap">
-	<section class="admin-table-card">
-		<h2>Select Product to Edit</h2>
-		<div class="admin-table-wrap">
-			<table class="admin-table">
-				<tr><th>ID</th><th>Name</th><th>Price</th><th>Actions</th></tr>
-				<?php while ($p = $products->fetch_assoc()): ?>
-					<tr>
-						<td><?= (int)$p['product_id'] ?></td>
-						<td><?= htmlspecialchars($p['name']) ?></td>
-						<td>Rs. <?= number_format($p['price'], 2) ?></td>
-						<td>
-							<a class="table-action" href="edit-product.php?id=<?= (int)$p['product_id'] ?>">Edit</a>
-							<a class="table-action danger" href="delete-product.php?id=<?= (int)$p['product_id'] ?>" onclick="return confirm('Delete this product?')">Delete</a>
-						</td>
-					</tr>
-				<?php endwhile; ?>
-			</table>
-		</div>
-	</section>
-
-	<?php if ($selected): ?>
-	<section class="admin-form-card" style="margin-top:16px">
-		<h2>Edit Product #<?= (int)$selected['product_id'] ?></h2>
-		<?php if (!empty($_GET['success'])): ?>
-			<div class="contact-success"><?= htmlspecialchars($_GET['success']) ?></div>
-		<?php endif; ?>
-		<?php if (!empty($_GET['error'])): ?>
-			<div class="contact-success" style="background:#fdecec;color:#9f1f1f"><?= htmlspecialchars($_GET['error']) ?></div>
-		<?php endif; ?>
-		<form method="POST" enctype="multipart/form-data">
-			<input type="hidden" name="update_product" value="1">
-			<input type="hidden" name="product_id" value="<?= (int)$selected['product_id'] ?>">
-			<div class="form-group"><label>Name</label><input type="text" name="name" value="<?= htmlspecialchars($selected['name']) ?>" required></div>
-			<div class="form-group">
-				<label>Description</label>
-				<textarea name="description" rows="4" required><?= htmlspecialchars($selected['description']) ?></textarea>
-			</div>
-			<div class="form-group"><label>Price</label><input type="number" step="0.01" name="price" value="<?= htmlspecialchars($selected['price']) ?>" required></div>
-			<div class="form-group">
-				<label>Current Image</label>
-				<div style="margin-top:8px">
-					<img src="<?= htmlspecialchars(resolveProductImagePath($selected['image_url'])) ?>" alt="<?= htmlspecialchars($selected['name']) ?>" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid #d7dfd3;">
-				</div>
-			</div>
-			<div class="form-group"><label>Upload New Image</label><input type="file" name="image_file" accept="image/*"></div>
-			<div class="form-group"><label>Image URL</label><input type="text" name="image_url" value="<?= htmlspecialchars($selected['image_url']) ?>"></div>
-			<div class="form-group">
-				<label>Category</label>
-				<select name="category_id" class="checkout-select" required>
-					<?php while ($cat = $categories->fetch_assoc()): ?>
-						<option value="<?= (int)$cat['category_id'] ?>" <?= (int)$cat['category_id'] === (int)$selected['category_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['category_name']) ?></option>
+<div class="admin-wrapper">
+	<?php include(__DIR__ . '/admin-sidebar.php'); ?>
+	<main class="admin-edit-wrap">
+		<section class="admin-table-card">
+			<h2>Select Product to Edit</h2>
+			<div class="admin-table-wrap">
+				<table class="admin-table">
+					<tr><th>ID</th><th>Name</th><th>Price</th><th>Actions</th></tr>
+					<?php while ($p = $products->fetch_assoc()): ?>
+						<tr>
+							<td><?= (int)$p['product_id'] ?></td>
+							<td><?= htmlspecialchars($p['name']) ?></td>
+							<td>Rs. <?= number_format($p['price'], 2) ?></td>
+							<td>
+								<a class="table-action" href="edit-product.php?id=<?= (int)$p['product_id'] ?>">Edit</a>
+								<a class="table-action danger" href="delete-product.php?id=<?= (int)$p['product_id'] ?>" onclick="return confirm('Delete this product?')">Delete</a>
+							</td>
+						</tr>
 					<?php endwhile; ?>
-				</select>
+				</table>
 			</div>
-			<button type="submit" class="checkout-btn">Update Product</button>
-		</form>
-	</section>
-	<?php else: ?>
-	<section class="admin-form-card" style="margin-top:16px">
-		<h2>Product Details Edit</h2>
-		<p>Select a product from the table above to edit its details.</p>
-	</section>
-	<?php endif; ?>
-</main>
+		</section>
+
+		<?php if ($selected): ?>
+		<section class="admin-form-card" style="margin-top:16px">
+			<h2>Edit Product #<?= (int)$selected['product_id'] ?></h2>
+			<?php if (!empty($_GET['success'])): ?>
+				<div class="contact-success"><?= htmlspecialchars($_GET['success']) ?></div>
+			<?php endif; ?>
+			<?php if (!empty($_GET['error'])): ?>
+				<div class="contact-success" style="background:#fdecec;color:#9f1f1f"><?= htmlspecialchars($_GET['error']) ?></div>
+			<?php endif; ?>
+			<form method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="update_product" value="1">
+				<input type="hidden" name="product_id" value="<?= (int)$selected['product_id'] ?>">
+				<div class="form-group"><label>Name</label><input type="text" name="name" value="<?= htmlspecialchars($selected['name']) ?>" required></div>
+				<div class="form-group">
+					<label>Description</label>
+					<textarea name="description" rows="4" required><?= htmlspecialchars($selected['description']) ?></textarea>
+				</div>
+				<div class="form-group"><label>Price</label><input type="number" step="0.01" name="price" value="<?= htmlspecialchars($selected['price']) ?>" required></div>
+				<div class="form-group">
+					<label>Current Image</label>
+					<div style="margin-top:8px">
+						<img src="<?= htmlspecialchars(resolveProductImagePath($selected['image_url'])) ?>" alt="<?= htmlspecialchars($selected['name']) ?>" style="width:120px;height:120px;object-fit:cover;border-radius:10px;border:1px solid #d7dfd3;">
+					</div>
+				</div>
+				<div class="form-group"><label>Upload New Image</label><input type="file" name="image_file" accept="image/*"></div>
+				<div class="form-group"><label>Image URL</label><input type="text" name="image_url" value="<?= htmlspecialchars($selected['image_url']) ?>"></div>
+				<div class="form-group">
+					<label>Category</label>
+					<select name="category_id" class="checkout-select" required>
+						<?php while ($cat = $categories->fetch_assoc()): ?>
+							<option value="<?= (int)$cat['category_id'] ?>" <?= (int)$cat['category_id'] === (int)$selected['category_id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['category_name']) ?></option>
+						<?php endwhile; ?>
+					</select>
+				</div>
+				<button type="submit" class="checkout-btn">Update Product</button>
+			</form>
+		</section>
+		<?php else: ?>
+		<section class="admin-form-card" style="margin-top:16px">
+			<h2>Product Details Edit</h2>
+			<p>Select a product from the table above to edit its details.</p>
+		</section>
+		<?php endif; ?>
+	</main>
+</div>
 </body>
 </html>

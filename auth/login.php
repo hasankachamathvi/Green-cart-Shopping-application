@@ -9,6 +9,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
+  // Allow admin login from this page as well
+  if (($email === 'admin' || $email === 'admin@greenmart') && $password === 'admin123') {
+    $adminStmt = $conn->prepare("SELECT admin_id, full_name FROM admin_users WHERE username IN ('admin', 'admin@greenmart') LIMIT 1");
+    $adminStmt->execute();
+    $adminResult = $adminStmt->get_result();
+
+    if ($adminResult && $adminResult->num_rows > 0) {
+      $admin = $adminResult->fetch_assoc();
+      $_SESSION['admin_id'] = (int)$admin['admin_id'];
+      $_SESSION['admin_name'] = $admin['full_name'];
+      header("Location: ../admin/dashboard.php");
+      exit;
+    }
+  }
+
     $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -73,6 +88,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <a href="google-login.php?redirect=<?= urlencode($redirect) ?>" class="social-btn google-btn">Continue with Google</a>
       <a href="facebook-login.php?redirect=<?= urlencode($redirect) ?>" class="social-btn facebook-btn">Continue with Facebook</a>
       <a href="passkey-auth.php?redirect=<?= urlencode($redirect) ?>" class="social-btn passkey-btn">Continue with Passkey</a>
+    </div>
+
+    <div style="margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center;">
+      Admin? Use <a href="../admin/dashboard.php" style="color: var(--primary); font-weight: 600;">Admin Login</a>
     </div>
 
     <div class="auth-divider"><span>new here?</span></div>

@@ -98,69 +98,58 @@ $products = $conn->query('SELECT p.product_id, p.name, p.price, c.category_name
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Manage Product - Admin</title>
 	<link rel="stylesheet" href="../assets/css/style.css?v=20260430">
-	<link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260426">
 </head>
 <body class="admin-page">
-<nav class="admin-sidebar">
-	<a class="nav-logo" href="../pages/index.php"><span>🌿</span> GreenCart Admin</a>
-	<div class="nav-right">
-		<a href="dashboard.php" class="back-btn">Dashboard</a>
-		<a href="manage-orders.php" class="back-btn">Orders</a>
-		<a href="manage-payments.php" class="back-btn">Payments</a>
-		<a href="manage-feedback.php" class="back-btn">Feedback</a>
-		<a href="add-product.php" class="back-btn">Manage Product</a>
-		<a href="manage-category.php" class="back-btn">Categories</a>
-		<a href="dashboard.php?logout=1" class="logout-btn">Log Out</a>
-	</div>
-</nav>
+<div class="admin-wrapper">
+	<?php include(__DIR__ . '/admin-sidebar.php'); ?>
+	<main class="admin-form-wrap">
+		<h1>Manage Product</h1>
+		<?php if ($message): ?><div class="contact-success"><?= htmlspecialchars($message) ?></div><?php endif; ?>
 
-<main class="admin-form-wrap">
-	<h1>Manage Product</h1>
-	<?php if ($message): ?><div class="contact-success"><?= htmlspecialchars($message) ?></div><?php endif; ?>
+		<form method="POST" enctype="multipart/form-data" class="admin-form-card">
+			<div class="form-group"><label>Name</label><input type="text" name="name" required></div>
+			<div class="form-group"><label>Description</label><input type="text" name="description" required></div>
+			<div class="form-group"><label>Price</label><input type="number" step="0.01" name="price" required></div>
+			<div class="form-group"><label>Upload Image</label><input type="file" name="image_file" accept="image/*"></div>
+			<div class="form-group"><label>Image URL (or filename in assets/images)</label><input type="text" name="image_url"></div>
+			<div class="form-group">
+				<label>Category</label>
+				<select name="category_id" class="checkout-select" required>
+					<option value="">Select category</option>
+					<?php while ($cat = $categories->fetch_assoc()): ?>
+						<option value="<?= (int)$cat['category_id'] ?>"><?= htmlspecialchars($cat['category_name']) ?></option>
+					<?php endwhile; ?>
+				</select>
+			</div>
+			<div class="form-group"><label>Or Create New Category</label><input type="text" name="new_category_name" placeholder="e.g., Dairy"></div>
+			<button type="submit" class="checkout-btn">Save Product</button>
+		</form>
 
-	<form method="POST" enctype="multipart/form-data" class="admin-form-card">
-		<div class="form-group"><label>Name</label><input type="text" name="name" required></div>
-		<div class="form-group"><label>Description</label><input type="text" name="description" required></div>
-		<div class="form-group"><label>Price</label><input type="number" step="0.01" name="price" required></div>
-		<div class="form-group"><label>Upload Image</label><input type="file" name="image_file" accept="image/*"></div>
-		<div class="form-group"><label>Image URL (or filename in assets/images)</label><input type="text" name="image_url"></div>
-		<div class="form-group">
-			<label>Category</label>
-			<select name="category_id" class="checkout-select" required>
-				<option value="">Select category</option>
-				<?php while ($cat = $categories->fetch_assoc()): ?>
-					<option value="<?= (int)$cat['category_id'] ?>"><?= htmlspecialchars($cat['category_name']) ?></option>
-				<?php endwhile; ?>
-			</select>
+		<div style="margin-top:18px">
+			<a href="edit-product.php" class="hero-ghost">Manage Existing Products</a>
 		</div>
-		<div class="form-group"><label>Or Create New Category</label><input type="text" name="new_category_name" placeholder="e.g., Dairy"></div>
-		<button type="submit" class="checkout-btn">Save Product</button>
-	</form>
 
-	<div style="margin-top:18px">
-		<a href="edit-product.php" class="hero-ghost">Manage Existing Products</a>
-	</div>
-
-	<section class="admin-table-card" style="margin-top:20px">
-		<h2>Existing Products</h2>
-		<div class="admin-table-wrap">
-			<table class="admin-table">
-				<tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr>
-				<?php while ($p = $products->fetch_assoc()): ?>
-					<tr>
-						<td><?= (int)$p['product_id'] ?></td>
-						<td><?= htmlspecialchars($p['name']) ?></td>
-						<td><?= htmlspecialchars($p['category_name'] ?: 'Uncategorized') ?></td>
-						<td>Rs. <?= number_format((float)$p['price'], 2) ?></td>
-						<td>
-							<a class="table-action" href="edit-product.php?id=<?= (int)$p['product_id'] ?>">Edit / Update</a>
-							<a class="table-action danger" href="delete-product.php?id=<?= (int)$p['product_id'] ?>" onclick="return confirm('Delete this product?')">Delete</a>
-						</td>
-					</tr>
-				<?php endwhile; ?>
-			</table>
-		</div>
-	</section>
-</main>
+		<section class="admin-table-card" style="margin-top:20px">
+			<h2>Existing Products</h2>
+			<div class="admin-table-wrap">
+				<table class="admin-table">
+					<tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr>
+					<?php while ($p = $products->fetch_assoc()): ?>
+						<tr>
+							<td><?= (int)$p['product_id'] ?></td>
+							<td><?= htmlspecialchars($p['name']) ?></td>
+							<td><?= htmlspecialchars($p['category_name'] ?: 'Uncategorized') ?></td>
+							<td>Rs. <?= number_format((float)$p['price'], 2) ?></td>
+							<td>
+								<a class="table-action" href="edit-product.php?id=<?= (int)$p['product_id'] ?>">Edit / Update</a>
+								<a class="table-action danger" href="delete-product.php?id=<?= (int)$p['product_id'] ?>" onclick="return confirm('Delete this product?')">Delete</a>
+							</td>
+						</tr>
+					<?php endwhile; ?>
+				</table>
+			</div>
+		</section>
+	</main>
+</div>
 </body>
 </html>

@@ -61,15 +61,23 @@ function ensureAdminSetup(mysqli $conn): void {
         $conn->query("ALTER TABLE orders ADD COLUMN payment_status VARCHAR(20) NULL");
     }
 
-    $rs = $conn->query("SELECT COUNT(*) AS c FROM admin_users");
-    $count = $rs ? (int)$rs->fetch_assoc()['c'] : 0;
-    if ($count === 0) {
-        $username = 'admin';
-        $name = 'System Admin';
-        $hash = password_hash('admin123', PASSWORD_DEFAULT);
-        $stmt = $conn->prepare("INSERT INTO admin_users (username, password_hash, full_name) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $username, $hash, $name);
-        $stmt->execute();
+    $defaultUsername = 'admin';
+    $defaultName = 'System Admin';
+    $defaultHash = password_hash('admin123', PASSWORD_DEFAULT);
+
+    $stmt = $conn->prepare("SELECT admin_id FROM admin_users WHERE username = ? LIMIT 1");
+    $stmt->bind_param("s", $defaultUsername);
+    $stmt->execute();
+    $existing = $stmt->get_result();
+
+    if ($existing && $existing->num_rows > 0) {
+        $update = $conn->prepare("UPDATE admin_users SET password_hash = ?, full_name = ? WHERE username = ?");
+        $update->bind_param("sss", $defaultHash, $defaultName, $defaultUsername);
+        $update->execute();
+    } else {
+        $insert = $conn->prepare("INSERT INTO admin_users (username, password_hash, full_name) VALUES (?, ?, ?)");
+        $insert->bind_param("sss", $defaultUsername, $defaultHash, $defaultName);
+        $insert->execute();
     }
 }
 

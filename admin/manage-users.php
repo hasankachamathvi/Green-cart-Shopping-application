@@ -83,7 +83,6 @@ function formatDate($date) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Users - GreenCart Admin</title>
-    <link rel="stylesheet" href="../assets/css/admin-sidebar.css?v=20260427">
     <style>
         .admin-main {
             flex: 1;
