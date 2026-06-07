@@ -37,7 +37,8 @@ while ($row = $items_result->fetch_assoc())
 		$subtotal += $row['price'] * $row['quantity'];
 }
 
-if (!$items) {
+if (!$items) 
+	{
 		header("Location: cart.php");
 		exit;
 }
