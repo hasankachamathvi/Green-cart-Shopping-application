@@ -45,7 +45,8 @@ function ensureAdminSetup(mysqli $conn): void
         }
     }
 
-    if (!isset($orderColumns['customer_name'])) {
+    if (!isset($orderColumns['customer_name'])) 
+        {
         $conn->query("ALTER TABLE orders ADD COLUMN customer_name VARCHAR(120) NULL");
     }
     if (!isset($orderColumns['phone'])) {
