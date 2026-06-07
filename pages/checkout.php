@@ -31,7 +31,8 @@ $items_result = $conn->query($items_sql);
 
 $items = [];
 $subtotal = 0;
-while ($row = $items_result->fetch_assoc()) {
+while ($row = $items_result->fetch_assoc()) 
+	{
 		$items[] = $row;
 		$subtotal += $row['price'] * $row['quantity'];
 }
