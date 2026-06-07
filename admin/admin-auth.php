@@ -5,7 +5,8 @@ if (session_status() === PHP_SESSION_NONE)
 }
 require_once(__DIR__ . '/../config/db.php');
 
-function ensureAdminSetup(mysqli $conn): void {
+function ensureAdminSetup(mysqli $conn): void 
+{
     $conn->query("CREATE TABLE IF NOT EXISTS admin_users (
         admin_id INT AUTO_INCREMENT PRIMARY KEY,
         username VARCHAR(60) UNIQUE NOT NULL,
