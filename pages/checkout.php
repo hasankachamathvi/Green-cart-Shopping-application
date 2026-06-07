@@ -3,7 +3,7 @@ session_start();
 include("../config/db.php");
 
 if (!isset($_SESSION['user_id'])) 
-	{
+{
 	header('Location: ../auth/login.php?redirect=../pages/checkout.php');
 	exit;
 }
