@@ -39,7 +39,8 @@ function ensureAdminSetup(mysqli $conn): void
     $orderColumns = [];
     $colRs = $conn->query("SHOW COLUMNS FROM orders");
     if ($colRs) {
-        while ($col = $colRs->fetch_assoc()) {
+        while ($col = $colRs->fetch_assoc()) 
+            {
             $orderColumns[$col['Field']] = true;
         }
     }
