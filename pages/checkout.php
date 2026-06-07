@@ -17,7 +17,7 @@ $cart_sql->bind_param("i", $user_id);
 $cart_sql->execute();
 $cart_result = $cart_sql->get_result();
 
-if ($cart_result->num_rows === 0) 
+if ($cart_result->num_rows === 0)
 	{
 		header("Location: cart.php");
 		exit;
