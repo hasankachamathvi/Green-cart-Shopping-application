@@ -12,6 +12,7 @@ session_start();
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body class="homepage">
 <nav class="nav">
 	<a class="nav-logo" href="index.php"><span>🌿</span> GreenCart</a>
